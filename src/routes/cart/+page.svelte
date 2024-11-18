@@ -53,11 +53,16 @@
 						{#each cart.lineItems as lineItem (lineItem.id)}
 							<li class="flex py-6 sm:py-10">
 								<div class="shrink-0">
-									<img
-										src={lineItem.variant?.images![0]?.url}
-										alt={lineItem.key}
-										class="size-24 rounded-md object-cover object-center sm:size-48"
-									/>
+									<a
+										href={`/product/${lineItem.productId}`}
+										class="font-medium text-gray-700 hover:text-gray-800"
+									>
+										<img
+											src={lineItem.variant?.images![0]?.url}
+											alt={lineItem.key}
+											class="size-24 rounded-md object-cover object-center sm:size-48"
+										/>
+									</a>
 								</div>
 
 								<div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
@@ -65,15 +70,14 @@
 										<div>
 											<div class="flex justify-between">
 												<h3 class="text-sm">
-													<a href="#" class="font-medium text-gray-700 hover:text-gray-800"
-														>{lineItem.key}</a
+													<a
+														href={`/product/${lineItem.productId}`}
+														class="font-medium text-gray-700 hover:text-gray-800"
+														>{lineItem.name['en-GB']}</a
 													>
 												</h3>
 											</div>
-											<div class="mt-1 flex text-sm">
-												<p class="text-gray-500">Colour</p>
-												<p class="ml-4 border-l border-gray-200 pl-4 text-gray-500">Size</p>
-											</div>
+
 											<p class="mt-1 text-sm font-medium text-gray-900">
 												{formatCurrency(lineItem.price.value)}
 											</p>
