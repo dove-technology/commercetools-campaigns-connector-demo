@@ -7,8 +7,8 @@
 	let cart = $state(data.cart);
 
 	const removeItem = async (lineItemId: string) => {
-		const response = await fetch('/api/cart/remove', {
-			method: 'POST',
+		const response = await fetch('/api/cart/items', {
+			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'
 			},

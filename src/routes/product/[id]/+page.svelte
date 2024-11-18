@@ -4,7 +4,7 @@
 	let selectedVariantSku = data.product.masterVariant.sku;
 
 	async function addToCart() {
-		const response = await fetch(`/api/cart/add`, {
+		const response = await fetch(`/api/cart/items`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
