@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { formatCurrency } from '$lib/CurrencyDisplay';
 	export let data;
 	let selectedVariantSku = data.product.masterVariant.sku;
 
@@ -24,7 +25,11 @@
 			<div class="lg:col-span-5 lg:col-start-8">
 				<div class="flex justify-between">
 					<h1 class="text-xl font-medium text-gray-900">{data.product.name['en-GB']}</h1>
-					<p class="text-xl font-medium text-gray-900">$35</p>
+					<p class="text-xl font-medium text-gray-900">
+						{data.product.masterVariant.price
+							? formatCurrency(data.product.masterVariant.price.value)
+							: ''}
+					</p>
 				</div>
 			</div>
 

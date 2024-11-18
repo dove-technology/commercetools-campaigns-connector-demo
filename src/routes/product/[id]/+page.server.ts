@@ -7,7 +7,13 @@ export const load: PageServerLoad = async ({ params }) => {
 	const result = await createClient()
 		.productProjections()
 		.withId({ ID: productId })
-		.get()
+
+		.get({
+			queryArgs: {
+				priceCurrency: 'EUR',
+				priceCountry: 'DE'
+			}
+		})
 		.execute();
 
 	return {
