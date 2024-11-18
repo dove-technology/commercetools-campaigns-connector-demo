@@ -3,19 +3,38 @@
 	import { formatCurrency } from '$lib/CurrencyDisplay.js';
 
 	let { data } = $props();
+
+	let cart = $state(data.cart);
+
+	const removeItem = async (lineItemId: string) => {
+		const response = await fetch('/api/cart/remove', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ lineItemId })
+		});
+
+		if (response.ok) {
+			cart = await response.json();
+			console.log(cart?.lineItems.length);
+		} else {
+			console.error('Failed to remove item from cart');
+		}
+	};
 </script>
 
 <div class="bg-white">
 	<div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
 		<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
 		<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-			{#if !data.cart}
+			{#if !cart || cart.lineItems.length === 0}
 				<p>Cart is empty</p>
 			{:else}
 				<section aria-labelledby="cart-heading" class="lg:col-span-7">
 					<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 					<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
-						{#each data.cart.lineItems as lineItem}
+						{#each cart.lineItems as lineItem}
 							<li class="flex py-6 sm:py-10">
 								<div class="shrink-0">
 									<img
@@ -63,6 +82,7 @@
 											<div class="absolute right-0 top-0">
 												<button
 													type="button"
+													onclick={() => removeItem(lineItem.id)}
 													class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
 												>
 													<span class="sr-only">Remove</span>
@@ -91,7 +111,7 @@
 					aria-labelledby="summary-heading"
 					class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
 				>
-					<h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
+					<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
 
 					<dl class="mt-6 space-y-4">
 						<!-- <div class="flex items-center justify-between">
@@ -103,14 +123,14 @@
 								<span>Shipping estimate</span>
 							</dt>
 							<dd class="text-sm font-medium text-gray-900">
-								{data.cart.shippingInfo?.price ? formatCurrency(data.cart.shippingInfo.price) : '-'}
+								{cart.shippingInfo?.price ? formatCurrency(cart.shippingInfo.price) : '-'}
 							</dd>
 						</div>
 
 						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 							<dt class="text-base font-medium text-gray-900">Order total</dt>
 							<dd class="text-base font-medium text-gray-900">
-								{data.cart.totalPrice ? formatCurrency(data.cart.totalPrice) : '-'}
+								{cart.totalPrice ? formatCurrency(cart.totalPrice) : '-'}
 							</dd>
 						</div>
 					</dl>
@@ -119,7 +139,7 @@
 						<button
 							type="button"
 							class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-							onclick={() => goto(`/checkout/${data.cart.id}`)}>Checkout</button
+							onclick={() => goto(`/checkout/${cart?.id}`)}>Checkout</button
 						>
 					</div>
 				</section>
