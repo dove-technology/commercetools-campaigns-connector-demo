@@ -1,4 +1,3 @@
-import { env } from '$env/dynamic/private';
 import type { PageServerLoad } from './$types';
 import { createClient } from '$lib/CreateClient';
 import { type RequestEvent } from '@sveltejs/kit';
