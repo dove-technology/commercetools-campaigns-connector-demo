@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { formatCurrency } from '$lib/CurrencyDisplay.js';
 
 	let { data } = $props();
 </script>
@@ -39,7 +40,7 @@
 												<p class="ml-4 border-l border-gray-200 pl-4 text-gray-500">Size</p>
 											</div>
 											<p class="mt-1 text-sm font-medium text-gray-900">
-												${lineItem.price.value.centAmount}
+												{formatCurrency(lineItem.price.value)}
 											</p>
 										</div>
 
@@ -93,23 +94,23 @@
 					<h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
 
 					<dl class="mt-6 space-y-4">
-						<div class="flex items-center justify-between">
+						<!-- <div class="flex items-center justify-between">
 							<dt class="text-sm text-gray-600">Subtotal</dt>
 							<dd class="text-sm font-medium text-gray-900">0</dd>
-						</div>
+						</div> -->
 						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 							<dt class="flex items-center text-sm text-gray-600">
 								<span>Shipping estimate</span>
 							</dt>
 							<dd class="text-sm font-medium text-gray-900">
-								${data.cart?.shippingInfo?.price.centAmount}
+								{data.cart.shippingInfo?.price ? formatCurrency(data.cart.shippingInfo.price) : '-'}
 							</dd>
 						</div>
 
 						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 							<dt class="text-base font-medium text-gray-900">Order total</dt>
 							<dd class="text-base font-medium text-gray-900">
-								${data.cart?.totalPrice.centAmount}
+								{data.cart.totalPrice ? formatCurrency(data.cart.totalPrice) : '-'}
 							</dd>
 						</div>
 					</dl>

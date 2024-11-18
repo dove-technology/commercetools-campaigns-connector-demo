@@ -1,6 +1,7 @@
 <script lang="ts">
 	let { data } = $props();
 	import { page } from '$app/stores';
+	import { formatCurrency } from '$lib/CurrencyDisplay';
 </script>
 
 {#key $page.params.categoryId}
@@ -20,7 +21,7 @@
 						/>
 						<h3 class="mt-4 text-sm text-gray-700">{product.name['en-GB']}</h3>
 						<p class="mt-1 text-lg font-medium text-gray-900">
-							€{JSON.stringify(product.masterVariant.price?.value.centAmount)}
+							{product.masterVariant.price ? formatCurrency(product.masterVariant.price.value) : ''}
 						</p>
 					</a>
 				{/each}
