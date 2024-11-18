@@ -7,7 +7,7 @@
 <header class="bg-white">
 	<nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
 		<div class="flex lg:flex-1">
-			<a href="#" class="-m-1.5 p-1.5">
+			<a href="/" class="-m-1.5 p-1.5">
 				<span class="sr-only">Your Company</span>
 				<img
 					class="h-8 w-auto"
@@ -45,10 +45,6 @@
 					>{category.name['en-GB']}</a
 				>
 			{/each}
-			<a
-				href="/product/75e7e216-2472-4b2a-b40c-dcb45f00a1f5"
-				class="text-sm/6 font-semibold text-gray-900">Product</a
-			>
 			<a href="/cart" class="text-sm/6 font-semibold text-gray-900">Cart</a>
 		</div>
 	</nav>
@@ -60,7 +56,7 @@
 			class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
 		>
 			<div class="flex items-center justify-between">
-				<a href="#" class="-m-1.5 p-1.5">
+				<a href="/" class="-m-1.5 p-1.5">
 					<span class="sr-only">Your Company</span>
 					<img
 						class="h-8 w-auto"
@@ -86,11 +82,13 @@
 			<div class="mt-6 flow-root">
 				<div class="-my-6 divide-y divide-gray-500/10">
 					<div class="space-y-2 py-6">
-						<a
-							href="/product/75e7e216-2472-4b2a-b40c-dcb45f00a1f5"
-							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-							>Product</a
-						>
+						{#each $page.data.categories as category}
+							<a
+								href={`/products/${category.id}`}
+								class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+								>{category.name['en-GB']}</a
+							>
+						{/each}
 						<a
 							href="/cart"
 							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
