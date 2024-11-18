@@ -22,6 +22,22 @@
 			console.error('Failed to remove item from cart');
 		}
 	};
+
+	const updateQuantity = async (lineItemId: string, quantity: number) => {
+		const response = await fetch('/api/cart/items', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ lineItemId, quantity })
+		});
+
+		if (response.ok) {
+			cart = await response.json();
+		} else {
+			console.error('Failed to update item quantity');
+		}
+	};
 </script>
 
 <div class="bg-white">
@@ -34,7 +50,7 @@
 				<section aria-labelledby="cart-heading" class="lg:col-span-7">
 					<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 					<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
-						{#each cart.lineItems as lineItem}
+						{#each cart.lineItems as lineItem (lineItem.id)}
 							<li class="flex py-6 sm:py-10">
 								<div class="shrink-0">
 									<img
@@ -71,6 +87,12 @@
 												id="quantity-{lineItem.id}"
 												name="quantity-{lineItem.id}"
 												class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+												onchange={(event) => {
+													if (event.target) {
+														const target = event.target as HTMLSelectElement;
+														updateQuantity(lineItem.id, parseInt(target.value));
+													}
+												}}
 											>
 												{#each Array(10)
 													.fill(0)
