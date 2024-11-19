@@ -7,9 +7,9 @@
 
 	onMount(() => {
 		checkoutFlow({
-			projectKey: 'smu-test',
-			region: 'europe-west1.gcp',
-			sessionId: data.id,
+			projectKey: data.projectKey,
+			region: data.region,
+			sessionId: data.sessionId,
 			locale: `en`,
 			logInfo: true,
 			logWarn: true,
