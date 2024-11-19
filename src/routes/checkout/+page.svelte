@@ -19,7 +19,7 @@
 					case 'checkout_completed':
 						// @ts-expect-error
 						const id = message.payload.order.id;
-						goto(`/orderconfirmation?orderId=${id}`);
+						goto(`/order-confirmation?orderId=${id}`);
 						break;
 					case 'checkout_cancelled':
 						goto(`/cart`);
