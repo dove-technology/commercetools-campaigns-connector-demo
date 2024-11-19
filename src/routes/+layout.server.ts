@@ -14,6 +14,7 @@ export const load = async ({ cookies }) => {
 	return {
 		categories: result.body.results,
 		currentCurrency: getCurrency(cookies),
-		currentCountry: getCountry(cookies)
+		currentCountry: getCountry(cookies),
+		currentLanguage: 'en-GB'
 	};
 };

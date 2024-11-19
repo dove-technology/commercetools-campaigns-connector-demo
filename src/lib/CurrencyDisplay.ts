@@ -2,14 +2,14 @@ import type { TypedMoney } from '@commercetools/platform-sdk';
 import { CurrencyValue } from './CurrencyValue';
 import CurrencyValueType from './types/CurrencyValueType';
 
-export function formatCurrency(money: TypedMoney) {
+export function formatCurrency(money: TypedMoney, currentLanguage: string) {
 	const currencyValue = new CurrencyValue(
 		money.centAmount,
 		money.fractionDigits,
 		CurrencyValueType.MinorUnits
 	);
 
-	const formattedValue = new Intl.NumberFormat('en-GB', {
+	const formattedValue = new Intl.NumberFormat(currentLanguage, {
 		minimumFractionDigits: money.fractionDigits,
 		maximumFractionDigits: money.fractionDigits
 	}).format(currencyValue.toCurrencyUnits());

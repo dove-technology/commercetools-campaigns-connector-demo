@@ -42,13 +42,13 @@
 												<a
 													href={`/product/${lineItem.productId}`}
 													class="font-medium text-gray-700 hover:text-gray-800"
-													>{lineItem.name['en-GB']}</a
+													>{lineItem.name[data.currentLanguage]}</a
 												>
 											</h3>
 										</div>
 
 										<p class="mt-1 text-sm font-medium text-gray-900">
-											{formatCurrency(lineItem.price.value)}
+											{formatCurrency(lineItem.price.value, data.currentLanguage)}
 										</p>
 									</div>
 
@@ -118,14 +118,16 @@
 							<span>Shipping estimate</span>
 						</dt>
 						<dd class="text-sm font-medium text-gray-900">
-							{cart.shippingInfo?.price ? formatCurrency(cart.shippingInfo.price) : '-'}
+							{cart.shippingInfo?.price
+								? formatCurrency(cart.shippingInfo.price, data.currentLanguage)
+								: '-'}
 						</dd>
 					</div>
 
 					<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 						<dt class="text-base font-medium text-gray-900">Order total</dt>
 						<dd class="text-base font-medium text-gray-900">
-							{cart.totalPrice ? formatCurrency(cart.totalPrice) : '-'}
+							{cart.totalPrice ? formatCurrency(cart.totalPrice, data.currentLanguage) : '-'}
 						</dd>
 					</div>
 				</dl>

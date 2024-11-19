@@ -30,7 +30,7 @@
 								<a
 									href={`/products/${category.id}`}
 									class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-									>{category.name['en-GB']}</a
+									>{category.name[data.currentLanguage]}</a
 								>
 							{/each}
 						</div>

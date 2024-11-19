@@ -16,10 +16,10 @@
 	<div class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
 		<div class="lg:col-span-5 lg:col-start-8">
 			<div class="flex justify-between">
-				<h1 class="text-xl font-medium text-gray-900">{data.product.name['en-GB']}</h1>
+				<h1 class="text-xl font-medium text-gray-900">{data.product.name[data.currentLanguage]}</h1>
 				<p class="text-xl font-medium text-gray-900">
 					{data.product.masterVariant.price
-						? formatCurrency(data.product.masterVariant.price.value)
+						? formatCurrency(data.product.masterVariant.price.value, data.currentLanguage)
 						: ''}
 				</p>
 			</div>
@@ -54,7 +54,7 @@
 
 				<div class="mt-4 space-y-4 text-sm/6 text-gray-500">
 					<p>
-						{data.product.description ? data.product.description['en-GB'] : ''}
+						{data.product.description ? data.product.description[data.currentLanguage] : ''}
 					</p>
 				</div>
 			</div>
