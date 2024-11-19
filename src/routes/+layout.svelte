@@ -19,6 +19,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Dovetech commercetools Demo Site</title>
+</svelte:head>
+
 <div class="bg-white">
 	<header class="relative bg-white">
 		<nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
