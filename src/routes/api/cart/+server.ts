@@ -6,18 +6,14 @@ export async function GET({ cookies }: RequestEvent) {
 	let cartId = cookies.get('cartId');
 
 	if (!cartId) {
-		return {
-			cart: undefined
-		};
+		return json(null);
 	}
 
 	const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
 
 	if (result.body.cartState === 'Ordered') {
 		cookies.delete('cartId', { path: '/' });
-		return {
-			cart: undefined
-		};
+		return json(null);
 	}
 
 	return json(result.body);

@@ -60,7 +60,7 @@
 				>
 			{/each}
 			<a href="/cart" class="text-sm/6 font-semibold text-gray-900"
-				>Cart {count == undefined ? '-' : count}</a
+				>Cart {count == undefined ? '0' : count}</a
 			>
 		</div>
 	</nav>
