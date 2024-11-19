@@ -1,11 +1,10 @@
 <script lang="ts">
 	import '../app.css';
-	import { page } from '$app/stores';
 	import { setCart, getCart } from '$lib/Cart.svelte';
 	import { onMount } from 'svelte';
 	import DoveTechWingLogo from '$lib/DoveTechWingLogo.svelte';
 
-	let { children } = $props();
+	let { data, children } = $props();
 	let count = $derived(getCart()?.lineItems.length);
 
 	onMount(async () => {
@@ -26,7 +25,7 @@
 				<div class="flex h-16 items-center justify-between">
 					<div class="flex-1 self-stretch">
 						<div class="flex h-full space-x-8">
-							{#each $page.data.categories as category}
+							{#each data.categories as category}
 								<a
 									href={`/products/${category.id}`}
 									class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
@@ -51,9 +50,10 @@
 									<select
 										id="country"
 										name="country"
+										bind:value={data.currentCountry}
 										class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
 									>
-										{#each $page.data.countries as country}
+										{#each data.countries as country}
 											<option>{country}</option>
 										{/each}
 									</select>
@@ -85,9 +85,10 @@
 									<select
 										id="currency"
 										name="currency"
+										bind:value={data.currentCurrency}
 										class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
 									>
-										{#each $page.data.currencies as currency}
+										{#each data.currencies as currency}
 											<option>{currency}</option>
 										{/each}
 									</select>
