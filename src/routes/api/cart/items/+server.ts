@@ -1,5 +1,6 @@
 import { createClient } from '$lib/CreateClient';
 import { json, type RequestEvent } from '@sveltejs/kit';
+import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
 
 export async function POST({ request, cookies }: RequestEvent) {
 	const apiRoot = createClient();
@@ -11,8 +12,8 @@ export async function POST({ request, cookies }: RequestEvent) {
 			.carts()
 			.post({
 				body: {
-					currency: 'EUR',
-					country: 'DE'
+					currency: getCurrency(cookies),
+					country: getCountry(cookies)
 				}
 			})
 			.execute();

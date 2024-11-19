@@ -1,7 +1,8 @@
 import type { PageServerLoad } from './$types';
 import { createClient } from '$lib/CreateClient';
+import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, cookies }) => {
 	const productId = params.id;
 
 	const result = await createClient()
@@ -10,8 +11,8 @@ export const load: PageServerLoad = async ({ params }) => {
 
 		.get({
 			queryArgs: {
-				priceCurrency: 'EUR',
-				priceCountry: 'DE'
+				priceCurrency: getCurrency(cookies),
+				priceCountry: getCountry(cookies)
 			}
 		})
 		.execute();
