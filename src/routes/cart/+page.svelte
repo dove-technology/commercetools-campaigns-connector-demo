@@ -1,43 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { formatCurrency } from '$lib/CurrencyDisplay.js';
+	import { formatCurrency } from '$lib/CurrencyDisplay';
+	import { setCart, getCart, removeItem, updateItemQuantity } from '$lib/Cart.svelte.js';
 
 	let { data } = $props();
 
-	let cart = $state(data.cart);
+	setCart(data.cart);
 
-	const removeItem = async (lineItemId: string) => {
-		const response = await fetch('/api/cart/items', {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ lineItemId })
-		});
-
-		if (response.ok) {
-			cart = await response.json();
-			console.log(cart?.lineItems.length);
-		} else {
-			console.error('Failed to remove item from cart');
-		}
-	};
-
-	const updateQuantity = async (lineItemId: string, quantity: number) => {
-		const response = await fetch('/api/cart/items', {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ lineItemId, quantity })
-		});
-
-		if (response.ok) {
-			cart = await response.json();
-		} else {
-			console.error('Failed to update item quantity');
-		}
-	};
+	let cart = $derived(getCart());
 </script>
 
 <div class="bg-white">
@@ -94,7 +64,7 @@
 												onchange={(event) => {
 													if (event.target) {
 														const target = event.target as HTMLSelectElement;
-														updateQuantity(lineItem.id, parseInt(target.value));
+														updateItemQuantity(lineItem.id, parseInt(target.value));
 													}
 												}}
 											>

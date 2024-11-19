@@ -1,7 +1,10 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/stores';
+	import { getCart } from '$lib/Cart.svelte';
+
 	let { children } = $props();
+	let count = $derived(getCart()?.lineItems.length);
 </script>
 
 <header class="bg-white">
@@ -45,7 +48,7 @@
 					>{category.name['en-GB']}</a
 				>
 			{/each}
-			<a href="/cart" class="text-sm/6 font-semibold text-gray-900">Cart</a>
+			<a href="/cart" class="text-sm/6 font-semibold text-gray-900">Cart {count}</a>
 		</div>
 	</nav>
 	<!-- Mobile menu, show/hide based on menu open state. -->
