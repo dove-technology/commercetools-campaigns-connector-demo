@@ -41,10 +41,42 @@
 					</div>
 
 					<div class="flex flex-1 items-center justify-end">
-						<!-- <a href="#" class="hidden text-gray-700 hover:text-gray-800 lg:flex lg:items-center">
-							<span class="ml-3 block text-sm font-medium">CAD</span>
-							<span class="sr-only">, change currency</span>
-						</a> -->
+						<!-- Currency selector -->
+						<form>
+							<div class="inline-block">
+								<label for="currency" class="sr-only">Currency</label>
+								<div
+									class="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white"
+								>
+									<select
+										id="currency"
+										name="currency"
+										class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
+									>
+										<option>CAD</option>
+										<option>USD</option>
+										<option>AUD</option>
+										<option>EUR</option>
+										<option>GBP</option>
+									</select>
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+										<svg
+											class="size-5 text-gray-500"
+											viewBox="0 0 20 20"
+											fill="currentColor"
+											aria-hidden="true"
+											data-slot="icon"
+										>
+											<path
+												fill-rule="evenodd"
+												d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+												clip-rule="evenodd"
+											/>
+										</svg>
+									</div>
+								</div>
+							</div>
+						</form>
 
 						<!-- Cart -->
 						<div class="ml-4 flow-root lg:ml-6">
