@@ -136,7 +136,7 @@
 					<button
 						type="button"
 						class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-						onclick={() => goto(`/checkout/${cart?.id}`)}>Checkout</button
+						onclick={() => goto('/checkout')}>Checkout</button
 					>
 				</div>
 			</section>

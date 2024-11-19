@@ -2,9 +2,13 @@ import { env } from '$env/dynamic/private';
 import { createClient } from '$lib/CreateClient';
 import { redirect } from '@sveltejs/kit';
 
-export async function load({ params }) {
+export async function load({ cookies }) {
 	const apiRoot = createClient();
-	const cartId = params.id;
+	const cartId = cookies.get('cartId');
+
+	if (!cartId) {
+		redirect(307, '/cart');
+	}
 
 	try {
 		const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
