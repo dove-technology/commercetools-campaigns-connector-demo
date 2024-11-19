@@ -7,3 +7,11 @@ export const getCurrency = (cookies: Cookies) => {
 export const getCountry = (cookies: Cookies) => {
 	return cookies.get('country') ?? 'DE';
 };
+
+export const setCurrency = (cookies: Cookies, currency: string) => {
+	cookies.set('currency', currency, { path: '/' });
+};
+
+export const setCountry = (cookies: Cookies, country: string) => {
+	cookies.set('country', country, { path: '/' });
+};

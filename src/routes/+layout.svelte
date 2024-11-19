@@ -41,7 +41,7 @@
 
 					<div class="flex flex-1 items-center justify-end">
 						<!-- Country selector -->
-						<form>
+						<form method="POST" action="/change-country">
 							<div class="inline-block">
 								<label for="country" class="sr-only">Country</label>
 								<div
@@ -51,6 +51,10 @@
 										id="country"
 										name="country"
 										bind:value={data.currentCountry}
+										onchange={(event) => {
+											const target = event.target as HTMLSelectElement;
+											target.form?.submit();
+										}}
 										class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
 									>
 										{#each data.countries as country}
@@ -76,7 +80,7 @@
 							</div>
 						</form>
 						<!-- Currency selector -->
-						<form>
+						<form method="POST" action="/change-currency">
 							<div class="inline-block">
 								<label for="currency" class="sr-only">Currency</label>
 								<div
@@ -86,6 +90,10 @@
 										id="currency"
 										name="currency"
 										bind:value={data.currentCurrency}
+										onchange={(event) => {
+											const target = event.target as HTMLSelectElement;
+											target.form?.submit();
+										}}
 										class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
 									>
 										{#each data.currencies as currency}
