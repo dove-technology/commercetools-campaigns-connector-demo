@@ -41,6 +41,40 @@
 					</div>
 
 					<div class="flex flex-1 items-center justify-end">
+						<!-- Country selector -->
+						<form>
+							<div class="inline-block">
+								<label for="country" class="sr-only">Country</label>
+								<div
+									class="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white"
+								>
+									<select
+										id="country"
+										name="country"
+										class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
+									>
+										{#each $page.data.countries as country}
+											<option>{country}</option>
+										{/each}
+									</select>
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+										<svg
+											class="size-5 text-gray-500"
+											viewBox="0 0 20 20"
+											fill="currentColor"
+											aria-hidden="true"
+											data-slot="icon"
+										>
+											<path
+												fill-rule="evenodd"
+												d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+												clip-rule="evenodd"
+											/>
+										</svg>
+									</div>
+								</div>
+							</div>
+						</form>
 						<!-- Currency selector -->
 						<form>
 							<div class="inline-block">
@@ -53,11 +87,9 @@
 										name="currency"
 										class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
 									>
-										<option>CAD</option>
-										<option>USD</option>
-										<option>AUD</option>
-										<option>EUR</option>
-										<option>GBP</option>
+										{#each $page.data.currencies as currency}
+											<option>{currency}</option>
+										{/each}
 									</select>
 									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
 										<svg

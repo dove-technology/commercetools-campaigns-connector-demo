@@ -1,7 +1,11 @@
 import { createClient } from '$lib/CreateClient';
 
 export const load = async () => {
-	const result = await createClient()
+	const ctClient = createClient();
+
+	const project = await ctClient.get().execute();
+
+	const result = await ctClient
 		.categories()
 		.get({
 			queryArgs: {
@@ -11,6 +15,10 @@ export const load = async () => {
 		.execute();
 
 	return {
-		categories: result.body.results
+		categories: result.body.results,
+		countries: project.body.countries,
+		currencies: project.body.currencies,
+		currentCountry: 'DE',
+		currentCurrency: 'EUR'
 	};
 };
