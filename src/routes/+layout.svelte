@@ -6,6 +6,7 @@
 
 	let { data, children } = $props();
 	let count = $derived(getCart()?.lineItems.length);
+	let cartLoaded = $derived(getCart() !== undefined);
 
 	onMount(async () => {
 		if (count === undefined) {
@@ -66,7 +67,7 @@
 									/>
 								</svg>
 								<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-									>{count}</span
+									>{cartLoaded ? count : '-'}</span
 								>
 								<span class="sr-only">items in cart, view bag</span>
 							</a>
