@@ -1,11 +1,11 @@
 import type { Cookies } from '@sveltejs/kit';
 
 export const getCurrency = (cookies: Cookies) => {
-	return cookies.get('currency') ?? 'EUR';
+	return cookies.get('currency') ?? 'GBP';
 };
 
 export const getCountry = (cookies: Cookies) => {
-	return cookies.get('country') ?? 'DE';
+	return cookies.get('country') ?? 'GB';
 };
 
 export const setCurrency = (cookies: Cookies, currency: string) => {
