@@ -37,7 +37,7 @@
 				id="coupon-code"
 				name="coupon-code"
 				class="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
-				placeholder=""
+				autocomplete="off"
 			/>
 			{#if form?.error}<p class="mt-2 text-sm text-red-600">{form.error}</p>{/if}
 		</div>
