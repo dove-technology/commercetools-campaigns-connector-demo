@@ -29,7 +29,7 @@ export const actions = {
 		const couponCode = data.get('coupon-code');
 
 		if (!couponCode) {
-			return fail(400, { 'coupon-code': couponCode, error: 'Enter a code' });
+			return fail(400, { error: 'Enter a code' });
 		}
 
 		if (couponCode === 'InvalidTestCode') {
