@@ -13,14 +13,8 @@ export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
 		};
 	}
 
-	const result = await getCart(cartId);
-
-	if (result.cartState === 'Ordered') {
-		throw new Error('Cart is already ordered');
-	}
-
 	return {
-		cart: result
+		cart: await getCart(cartId)
 	};
 };
 
@@ -44,7 +38,11 @@ export const actions = {
 			throw new Error('No cart');
 		}
 
-		const result = await getCart(cartId);
+		const cart = await getCart(cartId);
+
+		if (!cart) {
+			throw new Error('Cart not found');
+		}
 
 		let serialisedValue = JSON.stringify({
 			type: 'addCouponCode',
@@ -57,7 +55,7 @@ export const actions = {
 				.withId({ ID: cartId })
 				.post({
 					body: {
-						version: result.version,
+						version: cart.version,
 						actions: [
 							{
 								action: 'setCustomField',

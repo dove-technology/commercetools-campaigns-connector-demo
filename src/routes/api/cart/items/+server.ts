@@ -2,11 +2,14 @@ import { createClient } from '$lib/CreateClient';
 import { json, type RequestEvent } from '@sveltejs/kit';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
 import { getCart } from '$lib/CartService';
+import type { Cart } from '@commercetools/platform-sdk';
 
 export async function POST({ request, cookies }: RequestEvent) {
 	const apiRoot = createClient();
 	const { sku } = await request.json();
 	let cartId = cookies.get('cartId');
+
+	let cart: Cart | undefined;
 
 	if (!cartId) {
 		const cartResponse = await apiRoot
@@ -18,12 +21,18 @@ export async function POST({ request, cookies }: RequestEvent) {
 				}
 			})
 			.execute();
-		cartId = cartResponse.body.id;
+		cart = cartResponse.body;
+		cartId = cart.id;
 		cookies.set('cartId', cartId, { path: '/' });
+	} else {
+		cart = await getCart(cartId);
+
+		if (!cart) {
+			throw new Error('Cart not found');
+		}
 	}
 
-	const cartResponse = await getCart(cartId);
-	const cartVersion = cartResponse.version;
+	const cartVersion = cart.version;
 
 	const result = await apiRoot
 		.carts()
@@ -54,8 +63,12 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 		return json({ error: 'Cart not found' }, { status: 404 });
 	}
 
-	const cartResponse = await getCart(cartId);
-	const cartVersion = cartResponse.version;
+	const cart = await getCart(cartId);
+
+	if (!cart) {
+		throw new Error('Cart not found');
+	}
+	const cartVersion = cart.version;
 
 	const result = await apiRoot
 		.carts()
@@ -85,8 +98,13 @@ export async function PUT({ request, cookies }: RequestEvent) {
 		return json({ error: 'Cart not found' }, { status: 404 });
 	}
 
-	const cartResponse = await getCart(cartId);
-	const cartVersion = cartResponse.version;
+	const cart = await getCart(cartId);
+
+	if (!cart) {
+		throw new Error('Cart not found');
+	}
+
+	const cartVersion = cart.version;
 
 	const result = await apiRoot
 		.carts()

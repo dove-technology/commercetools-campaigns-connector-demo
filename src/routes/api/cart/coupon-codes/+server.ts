@@ -14,6 +14,11 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 	}
 
 	const cart = await getCart(cartId);
+
+	if (!cart) {
+		throw new Error('Cart not found');
+	}
+
 	const cartVersion = cart.version;
 
 	const couponCodes = getCouponCodes(cart);
