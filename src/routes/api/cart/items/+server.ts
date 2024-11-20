@@ -1,12 +1,18 @@
 import { createClient } from '$lib/CreateClient';
 import { json, type Cookies, type RequestEvent } from '@sveltejs/kit';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
-import { getCart, createCart } from '$lib/CartService';
+import {
+	getCart,
+	createCart,
+	addLineItem,
+	removeLineItem,
+	changeLineItemQuantity
+} from '$lib/CartService';
 import type { Cart } from '@commercetools/platform-sdk';
 
 export async function POST({ request, cookies }: RequestEvent) {
-	const apiRoot = createClient();
 	const { sku } = await request.json();
+
 	let cartId = cookies.get('cartId');
 
 	let cart: Cart | undefined;
@@ -24,24 +30,9 @@ export async function POST({ request, cookies }: RequestEvent) {
 
 	const cartVersion = cart.version;
 
-	const result = await apiRoot
-		.carts()
-		.withId({ ID: cart.id })
-		.post({
-			body: {
-				version: cartVersion,
-				actions: [
-					{
-						action: 'addLineItem',
-						sku: sku,
-						quantity: 1
-					}
-				]
-			}
-		})
-		.execute();
+	const updatedCart = await addLineItem(cart.id, cartVersion, sku);
 
-	return json(result.body);
+	return json(updatedCart);
 }
 
 export async function DELETE({ request, cookies }: RequestEvent) {
@@ -60,27 +51,12 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 	}
 	const cartVersion = cart.version;
 
-	const result = await apiRoot
-		.carts()
-		.withId({ ID: cartId })
-		.post({
-			body: {
-				version: cartVersion,
-				actions: [
-					{
-						action: 'removeLineItem',
-						lineItemId: lineItemId
-					}
-				]
-			}
-		})
-		.execute();
+	const updatedCart = await removeLineItem(cartId, cartVersion, lineItemId);
 
-	return json(result.body);
+	return json(updatedCart);
 }
 
 export async function PUT({ request, cookies }: RequestEvent) {
-	const apiRoot = createClient();
 	const { lineItemId, quantity } = await request.json();
 	let cartId = cookies.get('cartId');
 
@@ -96,24 +72,9 @@ export async function PUT({ request, cookies }: RequestEvent) {
 
 	const cartVersion = cart.version;
 
-	const result = await apiRoot
-		.carts()
-		.withId({ ID: cartId })
-		.post({
-			body: {
-				version: cartVersion,
-				actions: [
-					{
-						action: 'changeLineItemQuantity',
-						lineItemId: lineItemId,
-						quantity: quantity
-					}
-				]
-			}
-		})
-		.execute();
+	const updatedCart = await changeLineItemQuantity(cartId, cartVersion, lineItemId, quantity);
 
-	return json(result.body);
+	return json(updatedCart);
 }
 
 const createCartAndSetCookie = async (cookies: Cookies) => {

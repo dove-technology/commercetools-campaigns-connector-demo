@@ -36,3 +36,81 @@ export async function getCart(cartId: string) {
 		}
 	}
 }
+
+export async function addLineItem(
+	cartId: string,
+	cartVersion: number,
+	sku: string,
+	quantity: number = 1
+) {
+	const apiRoot = createClient();
+
+	const result = await apiRoot
+		.carts()
+		.withId({ ID: cartId })
+		.post({
+			body: {
+				version: cartVersion,
+				actions: [
+					{
+						action: 'addLineItem',
+						sku,
+						quantity
+					}
+				]
+			}
+		})
+		.execute();
+
+	return result.body;
+}
+
+export async function removeLineItem(cartId: string, cartVersion: number, lineItemId: string) {
+	const apiRoot = createClient();
+
+	const result = await apiRoot
+		.carts()
+		.withId({ ID: cartId })
+		.post({
+			body: {
+				version: cartVersion,
+				actions: [
+					{
+						action: 'removeLineItem',
+						lineItemId: lineItemId
+					}
+				]
+			}
+		})
+		.execute();
+
+	return result.body;
+}
+
+export async function changeLineItemQuantity(
+	cartId: string,
+	cartVersion: number,
+	lineItemId: string,
+	quantity: number
+) {
+	const apiRoot = createClient();
+
+	const result = await apiRoot
+		.carts()
+		.withId({ ID: cartId })
+		.post({
+			body: {
+				version: cartVersion,
+				actions: [
+					{
+						action: 'changeLineItemQuantity',
+						lineItemId: lineItemId,
+						quantity: quantity
+					}
+				]
+			}
+		})
+		.execute();
+
+	return result.body;
+}
