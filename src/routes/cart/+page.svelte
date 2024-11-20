@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { formatCurrency } from '$lib/CurrencyDisplay';
 	import { setCart, getCart, removeItem, updateItemQuantity } from '$lib/Cart.svelte.js';
+	import AddCouponCode from './AddCouponCode.svelte';
 
 	let { data } = $props();
 
@@ -109,6 +110,8 @@
 				<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
 
 				<dl class="mt-6 space-y-4">
+					<AddCouponCode />
+
 					<!-- <div class="flex items-center justify-between">
 							<dt class="text-sm text-gray-600">Subtotal</dt>
 							<dd class="text-sm font-medium text-gray-900">0</dd>
