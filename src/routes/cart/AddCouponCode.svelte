@@ -23,6 +23,7 @@
 			{/if}
 			{#if form?.missing}<p class="mt-2 text-sm text-red-600">Enter a code</p>{/if}
 			{#if form?.incorrect}<p class="mt-2 text-sm text-red-600">Code is not valid!</p>{/if}
+			{#if form?.error}<p class="mt-2 text-sm text-red-600">{form.error}</p>{/if}
 		</div>
 		<button
 			type="submit"

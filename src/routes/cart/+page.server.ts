@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
 };
 
 export const actions = {
-	addCouponCode: async ({ request }) => {
+	addCouponCode: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const couponCode = data.get('coupon-code');
 
@@ -34,6 +34,46 @@ export const actions = {
 
 		if (couponCode === 'InvalidTestCode') {
 			return fail(400, { 'coupon-code': couponCode, incorrect: true });
+		}
+
+		const apiRoot = createClient();
+		const cartId = cookies.get('cartId');
+
+		if (!cartId) {
+			throw new Error('No cart');
+		}
+
+		try {
+			const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+
+			let serialisedValue = JSON.stringify({
+				type: 'addCouponCode',
+				code: couponCode
+			});
+
+			await apiRoot
+				.carts()
+				.withId({ ID: cartId })
+				.post({
+					body: {
+						version: result.body.version,
+						actions: [
+							{
+								action: 'setCustomField',
+								name: 'dovetech-discounts-cartAction',
+								value: serialisedValue
+							}
+						]
+					}
+				})
+				.execute();
+		} catch (error) {
+			// @ts-expect-error
+			if (error.body.statusCode === 400) {
+				return fail(400, { error: 'Invalid coupon code' });
+			}
+
+			return fail(500, { error: 'Failed to set coupon code' });
 		}
 
 		return { success: true };
