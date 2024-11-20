@@ -114,3 +114,31 @@ export async function changeLineItemQuantity(
 
 	return result.body;
 }
+
+export async function addCouponCode(cartId: string, cartVersion: number, couponCode: string) {
+	const apiRoot = createClient();
+
+	const serialisedValue = JSON.stringify({
+		type: 'addCouponCode',
+		code: couponCode
+	});
+
+	const result = await apiRoot
+		.carts()
+		.withId({ ID: cartId })
+		.post({
+			body: {
+				version: cartVersion,
+				actions: [
+					{
+						action: 'setCustomField',
+						name: 'dovetech-discounts-cartAction',
+						value: serialisedValue
+					}
+				]
+			}
+		})
+		.execute();
+
+	return result.body;
+}

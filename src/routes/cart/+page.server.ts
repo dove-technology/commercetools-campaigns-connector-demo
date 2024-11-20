@@ -1,7 +1,7 @@
 import type { PageServerLoad, Actions } from './$types';
 import { createClient } from '$lib/CreateClient';
 import { fail, type RequestEvent } from '@sveltejs/kit';
-import { getCart } from '$lib/CartService';
+import { addCouponCode, getCart } from '$lib/CartService';
 import type { ClientResponse } from '@commercetools/ts-client';
 
 export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
@@ -31,7 +31,6 @@ export const actions = {
 			return fail(400, { 'coupon-code': couponCode, error: 'Invalid coupon code' });
 		}
 
-		const apiRoot = createClient();
 		const cartId = cookies.get('cartId');
 
 		if (!cartId) {
@@ -44,30 +43,10 @@ export const actions = {
 			throw new Error('Cart not found');
 		}
 
-		let serialisedValue = JSON.stringify({
-			type: 'addCouponCode',
-			code: couponCode
-		});
-
 		try {
-			const response = await apiRoot
-				.carts()
-				.withId({ ID: cartId })
-				.post({
-					body: {
-						version: cart.version,
-						actions: [
-							{
-								action: 'setCustomField',
-								name: 'dovetech-discounts-cartAction',
-								value: serialisedValue
-							}
-						]
-					}
-				})
-				.execute();
+			const updatedCart = await addCouponCode(cartId, cart.version, couponCode.toString());
 
-			return { success: true, cart: response.body };
+			return { success: true, cart: updatedCart };
 		} catch (error) {
 			const errorResponse = error as ClientResponse;
 
