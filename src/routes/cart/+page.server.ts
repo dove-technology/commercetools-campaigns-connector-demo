@@ -51,7 +51,7 @@ export const actions = {
 				code: couponCode
 			});
 
-			await apiRoot
+			const response = await apiRoot
 				.carts()
 				.withId({ ID: cartId })
 				.post({
@@ -67,6 +67,8 @@ export const actions = {
 					}
 				})
 				.execute();
+
+			return { success: true, cart: response.body };
 		} catch (error) {
 			// @ts-expect-error
 			if (error.body.statusCode === 400) {
@@ -75,7 +77,5 @@ export const actions = {
 
 			return fail(500, { error: 'Failed to set coupon code' });
 		}
-
-		return { success: true };
 	}
 } satisfies Actions;
