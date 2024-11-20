@@ -2,41 +2,33 @@
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 
-	let showInput = $state(false);
-
 	let { form }: { form: ActionData } = $props();
 </script>
 
 <div class="flex w-full flex-col">
-	<div>
-		<button
-			class="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
-			onclick={() => (showInput = !showInput)}
-		>
-			Add Promotion Code(s)
-		</button>
-	</div>
-	{#if showInput}
-		<div class="flex w-full gap-x-2">
-			<form method="POST" action="?/addCouponCode" use:enhance>
-				<input
-					type="text"
-					placeholder="Enter coupon code"
-					name="coupon-code"
-					class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-				/>
-				<button
-					type="submit"
-					class="mt-2 w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-				>
-					Apply
-				</button>
-				{#if form?.success}
-					<p>Code has been accepted</p>
-				{/if}
-				{#if form?.missing}<p class="error">Enter a code</p>{/if}
-				{#if form?.incorrect}<p class="error">Code is not valid!</p>{/if}
-			</form>
+	<form method="POST" action="?/addCouponCode" use:enhance class="space-y-4">
+		<div>
+			<label for="coupon-code" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+				Do you have a promo code?
+			</label>
+			<input
+				type="text"
+				id="coupon-code"
+				name="coupon-code"
+				class="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
+				placeholder=""
+			/>
+			{#if form?.success}
+				<p>Code has been accepted</p>
+			{/if}
+			{#if form?.missing}<p class="error">Enter a code</p>{/if}
+			{#if form?.incorrect}<p class="error">Code is not valid!</p>{/if}
 		</div>
-	{/if}
+		<button
+			type="submit"
+			class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+		>
+			Apply Code
+		</button>
+	</form>
 </div>
