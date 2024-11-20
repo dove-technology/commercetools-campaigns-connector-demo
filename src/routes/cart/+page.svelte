@@ -3,6 +3,7 @@
 	import { formatCurrency } from '$lib/CurrencyDisplay';
 	import { setCart, getCart, removeItem, updateItemQuantity } from '$lib/Cart.svelte.js';
 	import AddCouponCode from './AddCouponCode.svelte';
+	import CartCouponCodes from './CartCouponCodes.svelte';
 
 	let { data, form } = $props();
 
@@ -147,6 +148,7 @@
 				<div
 					class="mt-4 space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 dark:border-gray-700 dark:bg-gray-800"
 				>
+					<CartCouponCodes {cart} />
 					<AddCouponCode {form} />
 				</div>
 			</section>
