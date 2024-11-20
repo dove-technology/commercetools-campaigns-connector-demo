@@ -15,7 +15,7 @@
 		return [];
 	};
 
-	let codes = getCouponCodes();
+	let codes = $derived(getCouponCodes());
 </script>
 
 <ul>
