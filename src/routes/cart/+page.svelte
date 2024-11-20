@@ -111,9 +111,7 @@
 				aria-labelledby="summary-heading"
 				class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
 			>
-				<div
-					class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 dark:border-gray-700 dark:bg-gray-800"
-				>
+				<div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
 					<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
 
 					<dl class="mt-6 space-y-4">
@@ -148,9 +146,7 @@
 						>
 					</div>
 				</div>
-				<div
-					class="mt-4 space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 dark:border-gray-700 dark:bg-gray-800"
-				>
+				<div class="mt-4 space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
 					<CartCouponCodes {cart} />
 					<AddCouponCode {form} />
 				</div>
