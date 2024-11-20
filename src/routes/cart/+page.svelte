@@ -4,7 +4,7 @@
 	import { setCart, getCart, removeItem, updateItemQuantity } from '$lib/Cart.svelte.js';
 	import AddCouponCode from './AddCouponCode.svelte';
 
-	let { data } = $props();
+	let { data, form } = $props();
 
 	setCart(data.cart);
 
@@ -110,7 +110,7 @@
 				<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
 
 				<dl class="mt-6 space-y-4">
-					<AddCouponCode />
+					<AddCouponCode {form} />
 
 					<!-- <div class="flex items-center justify-between">
 							<dt class="text-sm text-gray-600">Subtotal</dt>
