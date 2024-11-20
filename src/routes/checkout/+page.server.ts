@@ -1,9 +1,9 @@
 import { env } from '$env/dynamic/private';
 import { createClient } from '$lib/CreateClient';
 import { redirect } from '@sveltejs/kit';
+import { getCart } from '$lib/CartService';
 
 export async function load({ cookies }) {
-	const apiRoot = createClient();
 	const cartId = cookies.get('cartId');
 
 	if (!cartId) {
@@ -11,9 +11,9 @@ export async function load({ cookies }) {
 	}
 
 	try {
-		const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+		const result = await getCart(cartId);
 
-		if (result.body.cartState === 'Ordered') {
+		if (result.cartState === 'Ordered') {
 			redirect(307, '/cart');
 		}
 	} catch (error) {

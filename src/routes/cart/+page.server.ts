@@ -1,10 +1,10 @@
 import type { PageServerLoad, Actions } from './$types';
 import { createClient } from '$lib/CreateClient';
 import { fail, type RequestEvent } from '@sveltejs/kit';
-import type { ClientResponse } from '@commercetools/platform-sdk';
+import { getCart } from '$lib/CartService';
+import type { ClientResponse } from '@commercetools/ts-client';
 
 export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
-	const apiRoot = createClient();
 	let cartId = cookies.get('cartId');
 
 	if (!cartId) {
@@ -13,14 +13,14 @@ export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
 		};
 	}
 
-	const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+	const result = await getCart(cartId);
 
-	if (result.body.cartState === 'Ordered') {
+	if (result.cartState === 'Ordered') {
 		throw new Error('Cart is already ordered');
 	}
 
 	return {
-		cart: result.body
+		cart: result
 	};
 };
 
@@ -44,7 +44,7 @@ export const actions = {
 			throw new Error('No cart');
 		}
 
-		const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+		const result = await getCart(cartId);
 
 		let serialisedValue = JSON.stringify({
 			type: 'addCouponCode',
@@ -57,7 +57,7 @@ export const actions = {
 				.withId({ ID: cartId })
 				.post({
 					body: {
-						version: result.body.version,
+						version: result.version,
 						actions: [
 							{
 								action: 'setCustomField',

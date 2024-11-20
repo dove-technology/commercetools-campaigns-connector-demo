@@ -2,6 +2,7 @@ import { createClient } from '$lib/CreateClient';
 import type { CartCouponCode } from '$lib/types/DovetechCouponCodes';
 import type { Cart } from '@commercetools/platform-sdk';
 import { json, type RequestEvent } from '@sveltejs/kit';
+import { getCart } from '$lib/CartService';
 
 export async function DELETE({ request, cookies }: RequestEvent) {
 	const apiRoot = createClient();
@@ -12,10 +13,10 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 		return json({ error: 'Cart not found' }, { status: 404 });
 	}
 
-	const cartResponse = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-	const cartVersion = cartResponse.body.version;
+	const cart = await getCart(cartId);
+	const cartVersion = cart.version;
 
-	const couponCodes = getCouponCodes(cartResponse.body);
+	const couponCodes = getCouponCodes(cart);
 	const newCouponCodes = couponCodes.filter((code) => code.code !== couponCode);
 	const serialisedValue = JSON.stringify(newCouponCodes);
 

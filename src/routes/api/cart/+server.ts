@@ -1,5 +1,6 @@
 import { createClient } from '$lib/CreateClient';
 import { json, type RequestEvent } from '@sveltejs/kit';
+import { getCart } from '$lib/CartService';
 
 export async function GET({ cookies }: RequestEvent) {
 	const apiRoot = createClient();
@@ -9,12 +10,12 @@ export async function GET({ cookies }: RequestEvent) {
 		return json(null);
 	}
 
-	const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+	const cart = await getCart(cartId);
 
-	if (result.body.cartState === 'Ordered') {
+	if (cart.cartState === 'Ordered') {
 		cookies.delete('cartId', { path: '/' });
 		return json(null);
 	}
 
-	return json(result.body);
+	return json(cart);
 }

@@ -1,6 +1,7 @@
 import { createClient } from '$lib/CreateClient';
 import { json, type RequestEvent } from '@sveltejs/kit';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
+import { getCart } from '$lib/CartService';
 
 export async function POST({ request, cookies }: RequestEvent) {
 	const apiRoot = createClient();
@@ -21,8 +22,8 @@ export async function POST({ request, cookies }: RequestEvent) {
 		cookies.set('cartId', cartId, { path: '/' });
 	}
 
-	const cartResponse = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-	const cartVersion = cartResponse.body.version;
+	const cartResponse = await getCart(cartId);
+	const cartVersion = cartResponse.version;
 
 	const result = await apiRoot
 		.carts()
@@ -53,8 +54,8 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 		return json({ error: 'Cart not found' }, { status: 404 });
 	}
 
-	const cartResponse = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-	const cartVersion = cartResponse.body.version;
+	const cartResponse = await getCart(cartId);
+	const cartVersion = cartResponse.version;
 
 	const result = await apiRoot
 		.carts()
@@ -84,8 +85,8 @@ export async function PUT({ request, cookies }: RequestEvent) {
 		return json({ error: 'Cart not found' }, { status: 404 });
 	}
 
-	const cartResponse = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-	const cartVersion = cartResponse.body.version;
+	const cartResponse = await getCart(cartId);
+	const cartVersion = cartResponse.version;
 
 	const result = await apiRoot
 		.carts()
