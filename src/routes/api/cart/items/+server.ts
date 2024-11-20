@@ -1,7 +1,7 @@
 import { createClient } from '$lib/CreateClient';
 import { json, type Cookies, type RequestEvent } from '@sveltejs/kit';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
-import { getCart } from '$lib/CartService';
+import { getCart, createCart } from '$lib/CartService';
 import type { Cart } from '@commercetools/platform-sdk';
 
 export async function POST({ request, cookies }: RequestEvent) {
@@ -12,13 +12,13 @@ export async function POST({ request, cookies }: RequestEvent) {
 	let cart: Cart | undefined;
 
 	if (!cartId) {
-		cart = await createCart(cookies);
+		cart = await createCartAndSetCookie(cookies);
 	} else {
 		cart = await getCart(cartId);
 
-		// handle the cart not being valid
+		// handle the cart not being valid even though we have an ID
 		if (!cart) {
-			cart = await createCart(cookies);
+			cart = await createCartAndSetCookie(cookies);
 		}
 	}
 
@@ -116,19 +116,8 @@ export async function PUT({ request, cookies }: RequestEvent) {
 	return json(result.body);
 }
 
-const createCart = async (cookies: Cookies) => {
-	const apiRoot = createClient();
-	const cartResponse = await apiRoot
-		.carts()
-		.post({
-			body: {
-				currency: getCurrency(cookies),
-				country: getCountry(cookies)
-			}
-		})
-		.execute();
-
-	const cart = cartResponse.body;
+const createCartAndSetCookie = async (cookies: Cookies) => {
+	const cart = await createCart(getCurrency(cookies), getCountry(cookies));
 
 	cookies.set('cartId', cart.id, { path: '/' });
 
