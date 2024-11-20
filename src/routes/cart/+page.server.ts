@@ -29,11 +29,11 @@ export const actions = {
 		const couponCode = data.get('coupon-code');
 
 		if (!couponCode) {
-			return fail(400, { 'coupon-code': couponCode, missing: true });
+			return fail(400, { 'coupon-code': couponCode, error: 'Enter a code' });
 		}
 
 		if (couponCode === 'InvalidTestCode') {
-			return fail(400, { 'coupon-code': couponCode, incorrect: true });
+			return fail(400, { 'coupon-code': couponCode, error: 'Invalid coupon code' });
 		}
 
 		const apiRoot = createClient();
