@@ -1,5 +1,5 @@
 import { createClient } from '$lib/CreateClient';
-import { json, type RequestEvent } from '@sveltejs/kit';
+import { json, type Cookies, type RequestEvent } from '@sveltejs/kit';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
 import { getCart } from '$lib/CartService';
 import type { Cart } from '@commercetools/platform-sdk';
@@ -12,23 +12,13 @@ export async function POST({ request, cookies }: RequestEvent) {
 	let cart: Cart | undefined;
 
 	if (!cartId) {
-		const cartResponse = await apiRoot
-			.carts()
-			.post({
-				body: {
-					currency: getCurrency(cookies),
-					country: getCountry(cookies)
-				}
-			})
-			.execute();
-		cart = cartResponse.body;
-		cartId = cart.id;
-		cookies.set('cartId', cartId, { path: '/' });
+		cart = await createCart(cookies);
 	} else {
 		cart = await getCart(cartId);
 
+		// handle the cart not being valid
 		if (!cart) {
-			throw new Error('Cart not found');
+			cart = await createCart(cookies);
 		}
 	}
 
@@ -36,7 +26,7 @@ export async function POST({ request, cookies }: RequestEvent) {
 
 	const result = await apiRoot
 		.carts()
-		.withId({ ID: cartId })
+		.withId({ ID: cart.id })
 		.post({
 			body: {
 				version: cartVersion,
@@ -125,3 +115,22 @@ export async function PUT({ request, cookies }: RequestEvent) {
 
 	return json(result.body);
 }
+
+const createCart = async (cookies: Cookies) => {
+	const apiRoot = createClient();
+	const cartResponse = await apiRoot
+		.carts()
+		.post({
+			body: {
+				currency: getCurrency(cookies),
+				country: getCountry(cookies)
+			}
+		})
+		.execute();
+
+	const cart = cartResponse.body;
+
+	cookies.set('cartId', cart.id, { path: '/' });
+
+	return cart;
+};
