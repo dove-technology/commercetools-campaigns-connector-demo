@@ -1,6 +1,7 @@
 import type { PageServerLoad, Actions } from './$types';
 import { createClient } from '$lib/CreateClient';
 import { fail, type RequestEvent } from '@sveltejs/kit';
+import type { ClientResponse } from '@commercetools/platform-sdk';
 
 export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
 	const apiRoot = createClient();
@@ -43,14 +44,14 @@ export const actions = {
 			throw new Error('No cart');
 		}
 
+		const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+
+		let serialisedValue = JSON.stringify({
+			type: 'addCouponCode',
+			code: couponCode
+		});
+
 		try {
-			const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-
-			let serialisedValue = JSON.stringify({
-				type: 'addCouponCode',
-				code: couponCode
-			});
-
 			const response = await apiRoot
 				.carts()
 				.withId({ ID: cartId })
@@ -70,8 +71,9 @@ export const actions = {
 
 			return { success: true, cart: response.body };
 		} catch (error) {
-			// @ts-expect-error
-			if (error.body.statusCode === 400) {
+			const errorResponse = error as ClientResponse;
+
+			if (errorResponse.body.statusCode === 400) {
 				return fail(400, { error: 'Invalid coupon code' });
 			}
 
