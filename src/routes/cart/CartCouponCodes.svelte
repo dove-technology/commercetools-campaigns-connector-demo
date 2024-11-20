@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Cart } from '@commercetools/platform-sdk';
 	import type { CartCouponCode } from '$lib/types/DovetechCouponCodes';
+	import { removeCouponCode } from '$lib/Cart.svelte';
 
 	let { cart }: { cart: Cart } = $props();
 
@@ -21,6 +22,7 @@
 	{#each codes as code}
 		<li>
 			{code.code}
+			<button onclick={() => removeCouponCode(code.code)}>x</button>
 		</li>
 	{/each}
 </ul>
