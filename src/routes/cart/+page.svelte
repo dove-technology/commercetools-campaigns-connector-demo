@@ -14,10 +14,13 @@
 
 <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
 	<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
-	<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-		{#if !cart || cart.lineItems.length === 0}
-			<p>Cart is empty</p>
-		{:else}
+
+	{#if !cart || cart.lineItems.length === 0}
+		<div class="mt-12 flex justify-center">
+			<p class="text-base">Your cart is empty</p>
+		</div>
+	{:else}
+		<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
 			<section aria-labelledby="cart-heading" class="lg:col-span-7">
 				<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 				<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
@@ -152,6 +155,6 @@
 					<AddCouponCode {form} />
 				</div>
 			</section>
-		{/if}
-	</div>
+		</div>
+	{/if}
 </div>
