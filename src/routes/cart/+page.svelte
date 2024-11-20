@@ -10,136 +10,136 @@
 	let cart = $derived(getCart());
 </script>
 
-<div class="bg-white">
-	<div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-		<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
-		<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-			{#if !cart || cart.lineItems.length === 0}
-				<p>Cart is empty</p>
-			{:else}
-				<section aria-labelledby="cart-heading" class="lg:col-span-7">
-					<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
-					<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
-						{#each cart.lineItems as lineItem (lineItem.id)}
-							<li class="flex py-6 sm:py-10">
-								<div class="shrink-0">
-									<a
-										href={`/product/${lineItem.productId}`}
-										class="font-medium text-gray-700 hover:text-gray-800"
-									>
-										<img
-											src={lineItem.variant?.images![0]?.url}
-											alt={lineItem.key}
-											class="size-24 rounded-md object-cover object-center sm:size-48"
-										/>
-									</a>
-								</div>
+<div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
+	<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
+	<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+		{#if !cart || cart.lineItems.length === 0}
+			<p>Cart is empty</p>
+		{:else}
+			<section aria-labelledby="cart-heading" class="lg:col-span-7">
+				<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
+				<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
+					{#each cart.lineItems as lineItem (lineItem.id)}
+						<li class="flex py-6 sm:py-10">
+							<div class="shrink-0">
+								<a
+									href={`/product/${lineItem.productId}`}
+									class="font-medium text-gray-700 hover:text-gray-800"
+								>
+									<img
+										src={lineItem.variant?.images![0]?.url}
+										alt={lineItem.key}
+										class="size-24 rounded-md object-cover object-center sm:size-48"
+									/>
+								</a>
+							</div>
 
-								<div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-									<div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-										<div>
-											<div class="flex justify-between">
-												<h3 class="text-sm">
-													<a
-														href={`/product/${lineItem.productId}`}
-														class="font-medium text-gray-700 hover:text-gray-800"
-														>{lineItem.name['en-GB']}</a
-													>
-												</h3>
-											</div>
-
-											<p class="mt-1 text-sm font-medium text-gray-900">
-												{formatCurrency(lineItem.price.value)}
-											</p>
+							<div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+								<div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+									<div>
+										<div class="flex justify-between">
+											<h3 class="text-sm">
+												<a
+													href={`/product/${lineItem.productId}`}
+													class="font-medium text-gray-700 hover:text-gray-800"
+													>{lineItem.name[data.currentLanguage]}</a
+												>
+											</h3>
 										</div>
 
-										<div class="mt-4 sm:mt-0 sm:pr-9">
-											<label for="quantity-{lineItem.id}" class="sr-only"
-												>Quantity, {lineItem.key}</label
-											>
-											<select
-												id="quantity-{lineItem.id}"
-												name="quantity-{lineItem.id}"
-												class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-												onchange={(event) => {
-													if (event.target) {
-														const target = event.target as HTMLSelectElement;
-														updateItemQuantity(lineItem.id, parseInt(target.value));
-													}
-												}}
-											>
-												{#each Array(10)
-													.fill(0)
-													.map((_, i) => i + 1) as qty}
-													<option value={qty} selected={qty === lineItem.quantity}>{qty}</option>
-												{/each}
-											</select>
+										<p class="mt-1 text-sm font-medium text-gray-900">
+											{formatCurrency(lineItem.price.value, data.currentLanguage)}
+										</p>
+									</div>
 
-											<div class="absolute right-0 top-0">
-												<button
-													type="button"
-													onclick={() => removeItem(lineItem.id)}
-													class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+									<div class="mt-4 sm:mt-0 sm:pr-9">
+										<label for="quantity-{lineItem.id}" class="sr-only"
+											>Quantity, {lineItem.key}</label
+										>
+										<select
+											id="quantity-{lineItem.id}"
+											name="quantity-{lineItem.id}"
+											class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+											onchange={(event) => {
+												if (event.target) {
+													const target = event.target as HTMLSelectElement;
+													updateItemQuantity(lineItem.id, parseInt(target.value));
+												}
+											}}
+										>
+											{#each Array(10)
+												.fill(0)
+												.map((_, i) => i + 1) as qty}
+												<option value={qty} selected={qty === lineItem.quantity}>{qty}</option>
+											{/each}
+										</select>
+
+										<div class="absolute right-0 top-0">
+											<button
+												type="button"
+												onclick={() => removeItem(lineItem.id)}
+												class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+											>
+												<span class="sr-only">Remove</span>
+												<svg
+													class="size-5"
+													viewBox="0 0 20 20"
+													fill="currentColor"
+													aria-hidden="true"
+													data-slot="icon"
 												>
-													<span class="sr-only">Remove</span>
-													<svg
-														class="size-5"
-														viewBox="0 0 20 20"
-														fill="currentColor"
-														aria-hidden="true"
-														data-slot="icon"
-													>
-														<path
-															d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
-														/>
-													</svg>
-												</button>
-											</div>
+													<path
+														d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
+													/>
+												</svg>
+											</button>
 										</div>
 									</div>
 								</div>
-							</li>
-						{/each}
-					</ul>
-				</section>
-				<!-- Order summary -->
-				<section
-					aria-labelledby="summary-heading"
-					class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
-				>
-					<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
+							</div>
+						</li>
+					{/each}
+				</ul>
+			</section>
+			<!-- Order summary -->
+			<section
+				aria-labelledby="summary-heading"
+				class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
+			>
+				<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
 
-					<dl class="mt-6 space-y-4">
-						<!-- <div class="flex items-center justify-between">
+				<dl class="mt-6 space-y-4">
+					<!-- <div class="flex items-center justify-between">
 							<dt class="text-sm text-gray-600">Subtotal</dt>
 							<dd class="text-sm font-medium text-gray-900">0</dd>
 						</div> -->
-						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
-							<dt class="flex items-center text-sm text-gray-600">
-								<span>Shipping estimate</span>
-							</dt>
-							<dd class="text-sm font-medium text-gray-900">
-								{cart.shippingInfo?.price ? formatCurrency(cart.shippingInfo.price) : '-'}
-							</dd>
-						</div>
-
-						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
-							<dt class="text-base font-medium text-gray-900">Order total</dt>
-							<dd class="text-base font-medium text-gray-900">
-								{cart.totalPrice ? formatCurrency(cart.totalPrice) : '-'}
-							</dd>
-						</div>
-					</dl>
-
-					<div class="mt-6">
-						<button
-							type="button"
-							class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-							onclick={() => goto(`/checkout/${cart?.id}`)}>Checkout</button
-						>
+					<div class="flex items-center justify-between border-t border-gray-200 pt-4">
+						<dt class="flex items-center text-sm text-gray-600">
+							<span>Shipping estimate</span>
+						</dt>
+						<dd class="text-sm font-medium text-gray-900">
+							{cart.shippingInfo?.price
+								? formatCurrency(cart.shippingInfo.price, data.currentLanguage)
+								: '-'}
+						</dd>
 					</div>
-				</section>
-			{/if}
-		</div>
+
+					<div class="flex items-center justify-between border-t border-gray-200 pt-4">
+						<dt class="text-base font-medium text-gray-900">Order total</dt>
+						<dd class="text-base font-medium text-gray-900">
+							{cart.totalPrice ? formatCurrency(cart.totalPrice, data.currentLanguage) : '-'}
+						</dd>
+					</div>
+				</dl>
+
+				<div class="mt-6">
+					<button
+						type="button"
+						class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+						onclick={() => goto('/checkout')}>Checkout</button
+					>
+				</div>
+			</section>
+		{/if}
 	</div>
 </div>

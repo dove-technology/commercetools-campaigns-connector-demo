@@ -7,19 +7,25 @@
 
 	onMount(() => {
 		checkoutFlow({
-			projectKey: 'smu-test',
-			region: 'europe-west1.gcp',
-			sessionId: data.id,
+			projectKey: data.projectKey,
+			region: data.region,
+			sessionId: data.sessionId,
 			locale: `en`,
 			logInfo: true,
 			logWarn: true,
 			logError: true,
 			onInfo: (message) => {
-				if (message.code === 'checkout_completed') {
-					// @ts-expect-error
-					const id = message.payload.order.id;
-
-					goto(`/orderconfirmation?orderId=${id}`);
+				switch (message.code) {
+					case 'checkout_completed':
+						// @ts-expect-error
+						const id = message.payload.order.id;
+						goto(`/order-confirmation?orderId=${id}`);
+						break;
+					case 'checkout_cancelled':
+						goto(`/cart`);
+						break;
+					default:
+						break;
 				}
 			},
 			onWarn: (message) => {

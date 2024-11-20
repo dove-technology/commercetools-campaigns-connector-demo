@@ -1,11 +1,12 @@
 <script lang="ts">
 	import '../app.css';
-	import { page } from '$app/stores';
 	import { setCart, getCart } from '$lib/Cart.svelte';
 	import { onMount } from 'svelte';
+	import DoveTechWingLogo from '$lib/DoveTechWingLogo.svelte';
 
-	let { children } = $props();
+	let { data, children } = $props();
 	let count = $derived(getCart()?.lineItems.length);
+	let cartLoaded = $derived(getCart() !== undefined);
 
 	onMount(async () => {
 		if (count === undefined) {
@@ -18,103 +19,67 @@
 	});
 </script>
 
-<header class="bg-white">
-	<nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-		<div class="flex lg:flex-1">
-			<a href="/" class="-m-1.5 p-1.5">
-				<span class="sr-only">Your Company</span>
-				<img
-					class="h-8 w-auto"
-					src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-					alt=""
-				/>
-			</a>
-		</div>
-		<div class="flex lg:hidden">
-			<button
-				type="button"
-				class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-			>
-				<span class="sr-only">Open main menu</span>
-				<svg
-					class="size-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="currentColor"
-					aria-hidden="true"
-					data-slot="icon"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-					/>
-				</svg>
-			</button>
-		</div>
-		<div class="hidden lg:flex lg:gap-x-12">
-			{#each $page.data.categories as category}
-				<a href={`/products/${category.id}`} class="text-sm/6 font-semibold text-gray-900"
-					>{category.name['en-GB']}</a
-				>
-			{/each}
-			<a href="/cart" class="text-sm/6 font-semibold text-gray-900"
-				>Cart {count == undefined ? '0' : count}</a
-			>
-		</div>
-	</nav>
-	<!-- Mobile menu, show/hide based on menu open state. -->
-	<div class="lg:hidden" role="dialog" aria-modal="true">
-		<!-- Background backdrop, show/hide based on slide-over state. -->
-		<div class="fixed inset-0 z-10"></div>
-		<div
-			class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
-		>
-			<div class="flex items-center justify-between">
-				<a href="/" class="-m-1.5 p-1.5">
-					<span class="sr-only">Your Company</span>
-					<img
-						class="h-8 w-auto"
-						src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-						alt=""
-					/>
-				</a>
-				<button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-					<span class="sr-only">Close menu</span>
-					<svg
-						class="size-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true"
-						data-slot="icon"
-					>
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-					</svg>
-				</button>
-			</div>
-			<div class="mt-6 flow-root">
-				<div class="-my-6 divide-y divide-gray-500/10">
-					<div class="space-y-2 py-6">
-						{#each $page.data.categories as category}
-							<a
-								href={`/products/${category.id}`}
-								class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-								>{category.name['en-GB']}</a
-							>
-						{/each}
+<svelte:head>
+	<title>Dovetech commercetools Demo Site</title>
+</svelte:head>
+
+<div class="bg-white">
+	<header class="relative bg-white">
+		<nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div class="border-b border-gray-200">
+				<div class="flex h-16 items-center justify-between">
+					<div class="flex-1 self-stretch">
+						<div class="flex h-full space-x-8">
+							{#each data.categories as category}
+								<a
+									href={`/products/${category.id}`}
+									class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+									>{category.name[data.currentLanguage]}</a
+								>
+							{/each}
+						</div>
+					</div>
+
+					<div class="m-x-auto mt-2 w-8">
+						<a href="/" title="Dovetech landing page"><DoveTechWingLogo /></a>
+					</div>
+
+					<div class="flex flex-1 items-center justify-end">
 						<a
-							href="/cart"
-							class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-							>Cart</a
+							href="/country-currency-picker"
+							class="text-sm font-medium text-gray-700 hover:text-gray-800"
 						>
+							{`${data.currentCountry} - ${data.currentCurrency}`}
+						</a>
+
+						<!-- Cart -->
+						<div class="ml-4 flow-root lg:ml-6">
+							<a href="/cart" class="group -m-2 flex items-center p-2">
+								<svg
+									class="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									aria-hidden="true"
+									data-slot="icon"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+									/>
+								</svg>
+								<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
+									>{cartLoaded ? count : '-'}</span
+								>
+								<span class="sr-only">items in cart, view bag</span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</header>
-
-{@render children()}
+		</nav>
+	</header>
+	{@render children()}
+</div>

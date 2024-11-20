@@ -2,9 +2,13 @@ import { env } from '$env/dynamic/private';
 import { createClient } from '$lib/CreateClient';
 import { redirect } from '@sveltejs/kit';
 
-export async function load({ params }) {
+export async function load({ cookies }) {
 	const apiRoot = createClient();
-	const cartId = params.id;
+	const cartId = cookies.get('cartId');
+
+	if (!cartId) {
+		redirect(307, '/cart');
+	}
 
 	try {
 		const result = await apiRoot.carts().withId({ ID: cartId }).get().execute();
@@ -16,6 +20,17 @@ export async function load({ params }) {
 		redirect(307, '/cart');
 	}
 
+	const accessToken = await getAccessToken();
+	const sessionId = await getSessionId(accessToken, cartId);
+
+	return {
+		sessionId,
+		projectKey: env.CTP_PROJECT_KEY!,
+		region: env.CTP_REGION!
+	};
+}
+
+const getAccessToken = async () => {
 	const basicAuth = Buffer.from(`${env.CTP_CLIENT_ID}:${env.CTP_CLIENT_SECRET}`).toString('base64');
 	const body = `grant_type=client_credentials${env.CTP_SCOPES ? `&scope=${env.CTP_SCOPES}` : ''}`;
 
@@ -31,15 +46,16 @@ export async function load({ params }) {
 		}
 	);
 
-	console.log(tokenResponse.status);
-
 	if (!tokenResponse.ok) {
 		throw new Error('Failed to get token ' + tokenResponse.status);
 	}
 
 	const tokenJson = await tokenResponse.json();
 	const accessToken = tokenJson.access_token;
+	return accessToken;
+};
 
+const getSessionId = async (accessToken: string, cartId: string) => {
 	const sessionUrl =
 		'https://session.' + env.CTP_REGION + '.commercetools.com/' + env.CTP_PROJECT_KEY + '/sessions';
 
@@ -63,11 +79,5 @@ export async function load({ params }) {
 		throw new Error('Failed to create session ' + sessionResponse.status);
 	}
 
-	const sessionJson = await sessionResponse.json();
-
-	console.log(sessionJson);
-
-	if (sessionJson?.id) {
-		return sessionJson;
-	}
-}
+	return (await sessionResponse.json()).id;
+};
