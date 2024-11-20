@@ -5,12 +5,17 @@
 	import type { Cart } from '@commercetools/platform-sdk';
 
 	let { form }: { form: ActionData } = $props();
+
+	let addingCode = $state(false);
 </script>
 
 <div class="flex w-full flex-col">
 	<form
 		method="POST"
 		action="?/addCouponCode"
+		onsubmit={() => {
+			addingCode = true;
+		}}
 		use:enhance={() => {
 			return async ({ update, result }) => {
 				if (result.type === 'success' && result.data?.cart) {
@@ -18,6 +23,7 @@
 				}
 
 				update();
+				addingCode = false;
 			};
 		}}
 		class="space-y-4"
@@ -37,7 +43,8 @@
 		</div>
 		<button
 			type="submit"
-			class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+			disabled={addingCode}
+			class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled:opacity-50"
 		>
 			Apply Code
 		</button>
