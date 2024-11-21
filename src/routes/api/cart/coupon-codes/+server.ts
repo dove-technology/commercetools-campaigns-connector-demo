@@ -1,6 +1,6 @@
 import { createClient } from '$lib/CreateClient';
 import { json, type RequestEvent } from '@sveltejs/kit';
-import { getCart } from '$lib/CartService';
+import { getCart, updateCouponCodes } from '$lib/CartService';
 import { getCouponCodes } from '$lib/CartHelpers';
 
 export async function DELETE({ request, cookies }: RequestEvent) {
@@ -22,24 +22,8 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 
 	const couponCodes = getCouponCodes(cart);
 	const newCouponCodes = couponCodes.filter((code) => code.code !== couponCode);
-	const serialisedValue = JSON.stringify(newCouponCodes);
 
-	const result = await apiRoot
-		.carts()
-		.withId({ ID: cartId })
-		.post({
-			body: {
-				version: cartVersion,
-				actions: [
-					{
-						action: 'setCustomField',
-						name: 'dovetech-discounts-couponCodes',
-						value: serialisedValue
-					}
-				]
-			}
-		})
-		.execute();
+	const updatedCart = await updateCouponCodes(cartId, cartVersion, newCouponCodes);
 
-	return json(result.body);
+	return json(updatedCart);
 }
