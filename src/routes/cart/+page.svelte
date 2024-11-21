@@ -1,17 +1,20 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { formatCurrency } from '$lib/CurrencyDisplay';
+	import { formatCurrency, formatFractionalDigits } from '$lib/CurrencyDisplay';
 	import { setCart, getCart } from '$lib/Cart.svelte.js';
 	import AddCouponCode from './AddCouponCode.svelte';
 	import CartCouponCodes from './CartCouponCodes.svelte';
 	import type { Cart } from '@commercetools/platform-sdk';
+	import { getCartSubtotal, getCartDiscountAmount } from '$lib/CartHelpers';
 
 	let { data, form } = $props();
 
 	setCart(data.cart);
 
 	let cart = $derived(getCart());
+	let cartSubtotal = $derived(getCartSubtotal(cart));
+	let cartDiscountAmount = $derived(getCartDiscountAmount(cart));
 </script>
 
 <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -153,10 +156,32 @@
 					<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
 
 					<dl class="mt-6 space-y-4">
-						<!-- <div class="flex items-center justify-between">
+						<div class="flex items-center justify-between">
 							<dt class="text-sm text-gray-600">Subtotal</dt>
-							<dd class="text-sm font-medium text-gray-900">0</dd>
-						</div> -->
+							<dd class="text-sm font-medium text-gray-900">
+								{formatFractionalDigits(
+									cartSubtotal,
+									cart.totalPrice.fractionDigits,
+									cart.totalPrice.currencyCode,
+									data.currentLanguage
+								)}
+							</dd>
+						</div>
+
+						{#if cartDiscountAmount > 0}
+							<div class="flex items-center justify-between text-green-700">
+								<dt class="text-sm">Discount</dt>
+								<dd class="text-sm font-medium">
+									-{formatFractionalDigits(
+										cartDiscountAmount,
+										cart.totalPrice.fractionDigits,
+										cart.totalPrice.currencyCode,
+										data.currentLanguage
+									)}
+								</dd>
+							</div>
+						{/if}
+
 						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 							<dt class="flex items-center text-sm text-gray-600">
 								<span>Shipping estimate</span>
@@ -167,6 +192,21 @@
 									: '-'}
 							</dd>
 						</div>
+
+						{#if cart.shippingInfo?.discountedPrice}
+							<div
+								class="flex items-center justify-between border-t border-gray-200 pt-4 text-green-700"
+							>
+								<dt class="flex items-center text-sm">
+									<span>Shipping discount</span>
+								</dt>
+								<dd class="text-sm font-medium">
+									-{cart.shippingInfo?.price
+										? formatCurrency(cart.shippingInfo.discountedPrice.value, data.currentLanguage)
+										: '-'}
+								</dd>
+							</div>
+						{/if}
 
 						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 							<dt class="text-base font-medium text-gray-900">Order total</dt>
