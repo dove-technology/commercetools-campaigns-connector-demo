@@ -1,6 +1,6 @@
 import type { Cart } from '@commercetools/platform-sdk';
 
-let state = $state({
+const state = $state({
 	cart: undefined as Cart | undefined
 });
 

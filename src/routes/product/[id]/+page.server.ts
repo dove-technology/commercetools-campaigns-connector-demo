@@ -29,7 +29,7 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const sku = formData.get('sku') as string;
 
-		let cartId = cookies.get('cartId');
+		const cartId = cookies.get('cartId');
 		let cart;
 
 		if (!cartId) {
