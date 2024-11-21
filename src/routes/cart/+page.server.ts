@@ -1,5 +1,4 @@
 import type { PageServerLoad, Actions } from './$types';
-import { createClient } from '$lib/CreateClient';
 import { fail, type RequestEvent } from '@sveltejs/kit';
 import { addCouponCode, getCart } from '$lib/CartService';
 import type { ClientResponse } from '@commercetools/ts-client';
@@ -42,7 +41,7 @@ export const actions = {
 		try {
 			const updatedCart = await addCouponCode(cartId, cart.version, couponCode.toString());
 
-			return { success: true, cart: updatedCart };
+			return { cart: updatedCart };
 		} catch (error) {
 			const errorResponse = error as ClientResponse;
 
