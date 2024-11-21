@@ -11,7 +11,6 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 	const result = await createClient()
 		.productProjections()
 		.withId({ ID: productId })
-
 		.get({
 			queryArgs: {
 				priceCurrency: getCurrency(cookies),
