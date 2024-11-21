@@ -1,6 +1,8 @@
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 import { createClient } from '$lib/CreateClient';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
+import { getCart, createCart, addLineItem } from '$lib/CartService';
+import type { Cookies } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const productId = params.id;
@@ -20,4 +22,40 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 	return {
 		product: result.body
 	};
+};
+
+export const actions: Actions = {
+	default: async ({ request, cookies }) => {
+		const formData = await request.formData();
+		const sku = formData.get('sku') as string;
+
+		let cartId = cookies.get('cartId');
+		let cart;
+
+		if (!cartId) {
+			cart = await createCartAndSetCookie(cookies);
+		} else {
+			cart = await getCart(cartId);
+
+			// handle the cart not being valid even though we have an ID
+			if (!cart) {
+				cart = await createCartAndSetCookie(cookies);
+			}
+		}
+
+		const updatedCart = await addLineItem(cart.id, cart.version, sku);
+
+		return {
+			success: true,
+			cart: updatedCart
+		};
+	}
+};
+
+const createCartAndSetCookie = async (cookies: Cookies) => {
+	const cart = await createCart(getCurrency(cookies), getCountry(cookies));
+
+	cookies.set('cartId', cart.id, { path: '/' });
+
+	return cart;
 };
