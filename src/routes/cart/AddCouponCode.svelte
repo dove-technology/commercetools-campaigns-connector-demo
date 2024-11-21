@@ -13,33 +13,33 @@
 	<form
 		method="POST"
 		action="?/addCouponCode"
-		onsubmit={() => {
-			addingCode = true;
-		}}
 		use:enhance={() => {
+			addingCode = true;
 			return async ({ update, result }) => {
 				if (result.type === 'success' && result.data?.cart) {
 					setCart(result.data.cart as Cart);
 				}
 
-				update();
+				await update();
 				addingCode = false;
 			};
 		}}
 		class="space-y-4"
 	>
 		<div>
-			<label for="coupon-code" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+			<label for="coupon-code" class="mb-2 block text-sm font-medium text-gray-900">
 				Do you have a promo code?
 			</label>
 			<input
 				type="text"
 				id="coupon-code"
 				name="coupon-code"
-				class="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
+				class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
 				autocomplete="off"
 			/>
-			{#if form?.error}<p class="mt-2 text-sm text-red-600">{form.error}</p>{/if}
+			{#if form?.addCouponCodeError}<p class="mt-2 text-sm text-red-600">
+					{form.addCouponCodeError}
+				</p>{/if}
 		</div>
 		<button
 			type="submit"

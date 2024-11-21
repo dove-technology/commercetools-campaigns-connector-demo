@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/CurrencyDisplay';
-	import { addItem } from '$lib/Cart.svelte.js';
+	import { enhance } from '$app/forms';
+	import { setCart } from '$lib/Cart.svelte.js';
+	import type { Cart } from '@commercetools/platform-sdk';
 
-	export let data;
+	let { data, form } = $props();
+
 	let selectedVariantSku = data.product.masterVariant.sku;
-
-	async function addToCart() {
-		if (selectedVariantSku) {
-			await addItem(selectedVariantSku);
-		}
-	}
+	let addingToCart = $state(false);
 </script>
 
 <main class="mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
@@ -39,13 +37,31 @@
 		</div>
 
 		<div class="mt-8 lg:col-span-5">
-			<form>
+			<form
+				method="POST"
+				use:enhance={() => {
+					addingToCart = true;
+
+					return async ({ update, result }) => {
+						if (result.type === 'success' && result.data?.cart) {
+							setCart(result.data.cart as Cart);
+						}
+
+						await update();
+						addingToCart = false;
+					};
+				}}
+			>
+				<input type="hidden" name="sku" value={selectedVariantSku} />
 				<button
-					type="button"
-					on:click={addToCart}
-					class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+					type="submit"
+					disabled={addingToCart}
+					class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
 					>Add to cart</button
 				>
+				{#if form?.addToCartError}<p class="mt-2 text-sm text-red-600">
+						{form.addToCartError}
+					</p>{/if}
 			</form>
 
 			<!-- Product details -->

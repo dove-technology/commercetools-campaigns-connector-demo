@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { formatCurrency } from '$lib/CurrencyDisplay';
-	import { setCart, getCart, removeItem, updateItemQuantity } from '$lib/Cart.svelte.js';
+	import { setCart, getCart } from '$lib/Cart.svelte.js';
 	import AddCouponCode from './AddCouponCode.svelte';
 	import CartCouponCodes from './CartCouponCodes.svelte';
+	import type { Cart } from '@commercetools/platform-sdk';
 
 	let { data, form } = $props();
 
@@ -14,10 +16,13 @@
 
 <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
 	<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
-	<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-		{#if !cart || cart.lineItems.length === 0}
-			<p>Cart is empty</p>
-		{:else}
+
+	{#if !cart || cart.lineItems.length === 0}
+		<div class="mt-12 flex justify-center">
+			<p class="text-base">Your cart is empty</p>
+		</div>
+	{:else}
+		<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
 			<section aria-labelledby="cart-heading" class="lg:col-span-7">
 				<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 				<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
@@ -55,46 +60,74 @@
 									</div>
 
 									<div class="mt-4 sm:mt-0 sm:pr-9">
-										<label for="quantity-{lineItem.id}" class="sr-only"
-											>Quantity, {lineItem.key}</label
-										>
-										<select
-											id="quantity-{lineItem.id}"
-											name="quantity-{lineItem.id}"
-											class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-											onchange={(event) => {
-												if (event.target) {
-													const target = event.target as HTMLSelectElement;
-													updateItemQuantity(lineItem.id, parseInt(target.value));
-												}
+										<form
+											method="POST"
+											action="?/updateItemQuantity"
+											use:enhance={() => {
+												return async ({ update, result }) => {
+													if (result.type === 'success' && result.data?.cart) {
+														setCart(result.data.cart as Cart);
+													}
+
+													await update();
+												};
 											}}
 										>
-											{#each Array(10)
-												.fill(0)
-												.map((_, i) => i + 1) as qty}
-												<option value={qty} selected={qty === lineItem.quantity}>{qty}</option>
-											{/each}
-										</select>
+											<label for="quantity-{lineItem.id}" class="sr-only"
+												>Quantity, {lineItem.key}</label
+											>
+											<input type="hidden" name="line-item-id" value={lineItem.id} />
+											<select
+												id="quantity-{lineItem.id}"
+												name="quantity"
+												class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+												onchange={(event) => {
+													const select = event.target as HTMLSelectElement;
+													select.form?.requestSubmit();
+												}}
+											>
+												{#each Array(10)
+													.fill(0)
+													.map((_, i) => i + 1) as qty}
+													<option value={qty} selected={qty === lineItem.quantity}>{qty}</option>
+												{/each}
+											</select>
+											<button class="sr-only" type="submit">Update</button>
+										</form>
 
 										<div class="absolute right-0 top-0">
-											<button
-												type="button"
-												onclick={() => removeItem(lineItem.id)}
-												class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+											<form
+												method="POST"
+												action="?/removeLineItem"
+												use:enhance={() => {
+													return async ({ update, result }) => {
+														if (result.type === 'success' && result.data?.cart) {
+															setCart(result.data.cart as Cart);
+														}
+
+														await update();
+													};
+												}}
 											>
-												<span class="sr-only">Remove</span>
-												<svg
-													class="size-5"
-													viewBox="0 0 20 20"
-													fill="currentColor"
-													aria-hidden="true"
-													data-slot="icon"
+												<input type="hidden" name="line-item-id" value={lineItem.id} />
+												<button
+													type="submit"
+													class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
 												>
-													<path
-														d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
-													/>
-												</svg>
-											</button>
+													<span class="sr-only">Remove</span>
+													<svg
+														class="size-5"
+														viewBox="0 0 20 20"
+														fill="currentColor"
+														aria-hidden="true"
+														data-slot="icon"
+													>
+														<path
+															d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
+														/>
+													</svg>
+												</button>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -108,9 +141,7 @@
 				aria-labelledby="summary-heading"
 				class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
 			>
-				<div
-					class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 dark:border-gray-700 dark:bg-gray-800"
-				>
+				<div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
 					<h2 id="summary-heading" class="font-meddeleteItemt-gray-900 text-lg">Order summary</h2>
 
 					<dl class="mt-6 space-y-4">
@@ -145,13 +176,11 @@
 						>
 					</div>
 				</div>
-				<div
-					class="mt-4 space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 dark:border-gray-700 dark:bg-gray-800"
-				>
+				<div class="mt-4 space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
 					<CartCouponCodes {cart} />
 					<AddCouponCode {form} />
 				</div>
 			</section>
-		{/if}
-	</div>
+		</div>
+	{/if}
 </div>

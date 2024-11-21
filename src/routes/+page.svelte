@@ -1,1 +1,1 @@
-<h1>Welcome to SvelteKit</h1>
+<h1>Welcome to the Dovetech Connector Demo</h1>
