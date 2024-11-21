@@ -4,7 +4,8 @@ import {
 	addCouponCode,
 	getCart,
 	updateCouponCodes,
-	changeLineItemQuantity
+	changeLineItemQuantity,
+	removeLineItem
 } from '$lib/CartService';
 import type { ClientResponse } from '@commercetools/ts-client';
 import { getCouponCodes } from '$lib/CartHelpers';
@@ -84,6 +85,24 @@ export const actions = {
 			return { cart: updatedCart };
 		} catch (error) {
 			return fail(500, { error: 'Failed to update item quantity' });
+		}
+	},
+	removeLineItem: async ({ request, cookies }) => {
+		const data = await request.formData();
+		const lineItemId = data.get('line-item-id');
+
+		if (!lineItemId) {
+			return fail(400, { error: 'Missing line item ID' });
+		}
+
+		const cart = await getCartFromSession(cookies);
+
+		try {
+			const updatedCart = await removeLineItem(cart.id, cart.version, lineItemId.toString());
+
+			return { cart: updatedCart };
+		} catch (error) {
+			return fail(500, { error: 'Failed to remove item' });
 		}
 	}
 } satisfies Actions;

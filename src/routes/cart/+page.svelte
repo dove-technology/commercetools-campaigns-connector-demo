@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { formatCurrency } from '$lib/CurrencyDisplay';
-	import { setCart, getCart, removeItem } from '$lib/Cart.svelte.js';
+	import { setCart, getCart } from '$lib/Cart.svelte.js';
 	import AddCouponCode from './AddCouponCode.svelte';
 	import CartCouponCodes from './CartCouponCodes.svelte';
 	import type { Cart } from '@commercetools/platform-sdk';
@@ -96,24 +96,38 @@
 										</form>
 
 										<div class="absolute right-0 top-0">
-											<button
-												type="button"
-												onclick={() => removeItem(lineItem.id)}
-												class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+											<form
+												method="POST"
+												action="?/removeLineItem"
+												use:enhance={() => {
+													return async ({ update, result }) => {
+														if (result.type === 'success' && result.data?.cart) {
+															setCart(result.data.cart as Cart);
+														}
+
+														update();
+													};
+												}}
 											>
-												<span class="sr-only">Remove</span>
-												<svg
-													class="size-5"
-													viewBox="0 0 20 20"
-													fill="currentColor"
-													aria-hidden="true"
-													data-slot="icon"
+												<input type="hidden" name="line-item-id" value={lineItem.id} />
+												<button
+													type="submit"
+													class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
 												>
-													<path
-														d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
-													/>
-												</svg>
-											</button>
+													<span class="sr-only">Remove</span>
+													<svg
+														class="size-5"
+														viewBox="0 0 20 20"
+														fill="currentColor"
+														aria-hidden="true"
+														data-slot="icon"
+													>
+														<path
+															d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
+														/>
+													</svg>
+												</button>
+											</form>
 										</div>
 									</div>
 								</div>
