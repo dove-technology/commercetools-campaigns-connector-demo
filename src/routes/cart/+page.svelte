@@ -22,6 +22,14 @@
 			<p class="text-base">Your cart is empty</p>
 		</div>
 	{:else}
+		<p class="text-sm font-medium text-gray-700">
+			{#if cart.customerEmail}
+				{cart.customerEmail}
+			{:else}
+				no customer on cart
+				<a href="/set-customer" class="text-indigo-600 hover:text-indigo-700">set one?</a>
+			{/if}
+		</p>
 		<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
 			<section aria-labelledby="cart-heading" class="lg:col-span-7">
 				<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>

@@ -2,14 +2,21 @@ import { createClient } from '$lib/CreateClient';
 import type { ClientResponse } from '@commercetools/ts-client';
 import type { CartCouponCode } from './types/DovetechCouponCodes';
 
-export async function createCart(currency: string, country: string) {
+export async function createCart(
+	currency: string,
+	country: string,
+	customerId?: string,
+	customerEmail?: string
+) {
 	const apiRoot = createClient();
 	const response = await apiRoot
 		.carts()
 		.post({
 			body: {
 				currency,
-				country
+				country,
+				customerId,
+				customerEmail
 			}
 		})
 		.execute();
@@ -164,6 +171,37 @@ export async function updateCouponCodes(
 						action: 'setCustomField',
 						name: 'dovetech-discounts-couponCodes',
 						value: serialisedValue
+					}
+				]
+			}
+		})
+		.execute();
+
+	return result.body;
+}
+
+export async function setCustomer(
+	cartId: string,
+	cartVersion: number,
+	customerId: string | undefined,
+	customerEmail: string | undefined
+) {
+	const apiRoot = createClient();
+
+	const result = await apiRoot
+		.carts()
+		.withId({ ID: cartId })
+		.post({
+			body: {
+				version: cartVersion,
+				actions: [
+					{
+						action: 'setCustomerId',
+						customerId: customerId
+					},
+					{
+						action: 'setCustomerEmail',
+						email: customerEmail
 					}
 				]
 			}
