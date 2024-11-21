@@ -30,7 +30,7 @@ export const actions = {
 		const couponCode = data.get('coupon-code');
 
 		if (!couponCode) {
-			return fail(400, { error: 'Enter a code' });
+			return fail(400, { addCouponCodeError: 'Enter a code' });
 		}
 
 		const cart = await getCartFromSession(cookies);
@@ -43,10 +43,12 @@ export const actions = {
 			const errorResponse = error as ClientResponse;
 
 			if (errorResponse.body.statusCode === 400) {
-				return fail(400, { error: 'Invalid coupon code' });
+				return fail(400, { addCouponCodeError: 'Invalid coupon code' });
 			}
 
-			return fail(500, { error: 'Failed to set coupon code' });
+			console.error(error);
+
+			return fail(500, { addCouponCodeError: 'Failed to set coupon code' });
 		}
 	},
 	removeCouponCode: async ({ request, cookies }) => {
@@ -57,9 +59,14 @@ export const actions = {
 		const couponCodes = getCouponCodes(cart);
 		const newCouponCodes = couponCodes.filter((code) => code.code !== couponCode);
 
-		const updatedCart = await updateCouponCodes(cart.id, cart.version, newCouponCodes);
+		try {
+			const updatedCart = await updateCouponCodes(cart.id, cart.version, newCouponCodes);
 
-		return { cart: updatedCart };
+			return { cart: updatedCart };
+		} catch (error) {
+			console.error(error);
+			return fail(500, { removeCouponCodeError: 'Failed to remove coupon code' });
+		}
 	},
 	updateItemQuantity: async ({ request, cookies }) => {
 		const data = await request.formData();
@@ -67,7 +74,7 @@ export const actions = {
 		const quantity = data.get('quantity');
 
 		if (!lineItemId || !quantity) {
-			return fail(400, { error: 'Missing line item ID or quantity' });
+			return fail(400, { updateItemQuantityError: 'Missing line item ID or quantity' });
 		}
 
 		const cart = await getCartFromSession(cookies);
@@ -84,7 +91,8 @@ export const actions = {
 
 			return { cart: updatedCart };
 		} catch (error) {
-			return fail(500, { error: 'Failed to update item quantity' });
+			console.error(error);
+			return fail(500, { updateItemQuantityError: 'Failed to update item quantity' });
 		}
 	},
 	removeLineItem: async ({ request, cookies }) => {
@@ -92,7 +100,7 @@ export const actions = {
 		const lineItemId = data.get('line-item-id');
 
 		if (!lineItemId) {
-			return fail(400, { error: 'Missing line item ID' });
+			return fail(400, { removeLineItemError: 'Missing line item ID' });
 		}
 
 		const cart = await getCartFromSession(cookies);
@@ -102,7 +110,8 @@ export const actions = {
 
 			return { cart: updatedCart };
 		} catch (error) {
-			return fail(500, { error: 'Failed to remove item' });
+			console.error(error);
+			return fail(500, { removeLineItemError: 'Failed to remove item' });
 		}
 	}
 } satisfies Actions;

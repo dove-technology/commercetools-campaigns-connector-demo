@@ -37,7 +37,9 @@
 				class="focus:border-primary-500 focus:ring-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
 				autocomplete="off"
 			/>
-			{#if form?.error}<p class="mt-2 text-sm text-red-600">{form.error}</p>{/if}
+			{#if form?.addCouponCodeError}<p class="mt-2 text-sm text-red-600">
+					{form.addCouponCodeError}
+				</p>{/if}
 		</div>
 		<button
 			type="submit"
