@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { checkoutFlow } from '@commercetools/checkout-browser-sdk';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
@@ -17,8 +17,7 @@
 			onInfo: (message) => {
 				switch (message.code) {
 					case 'checkout_completed':
-						// @ts-expect-error
-						const id = message.payload.order.id;
+						const id = (message.payload as { order: { id: string } }).order.id;
 						goto(`/order-confirmation?orderId=${id}`);
 						break;
 					case 'checkout_cancelled':
