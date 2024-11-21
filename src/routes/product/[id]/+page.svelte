@@ -4,7 +4,7 @@
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart } from '@commercetools/platform-sdk';
 
-	let { data } = $props();
+	let { data, form } = $props();
 
 	let selectedVariantSku = data.product.masterVariant.sku;
 	let addingToCart = $state(false);
@@ -59,6 +59,9 @@
 					class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
 					>Add to cart</button
 				>
+				{#if form?.addToCartError}<p class="mt-2 text-sm text-red-600">
+						{form.addToCartError}
+					</p>{/if}
 			</form>
 
 			<!-- Product details -->

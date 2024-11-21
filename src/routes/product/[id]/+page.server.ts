@@ -2,7 +2,8 @@ import type { PageServerLoad, Actions } from './$types';
 import { createClient } from '$lib/CreateClient';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
 import { getCart, createCart, addLineItem } from '$lib/CartService';
-import type { Cookies } from '@sveltejs/kit';
+import { fail, type Cookies } from '@sveltejs/kit';
+import type { ClientResponse } from '@commercetools/ts-client';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const productId = params.id;
@@ -43,12 +44,23 @@ export const actions: Actions = {
 			}
 		}
 
-		const updatedCart = await addLineItem(cart.id, cart.version, sku);
+		try {
+			const updatedCart = await addLineItem(cart.id, cart.version, sku);
 
-		return {
-			success: true,
-			cart: updatedCart
-		};
+			return {
+				cart: updatedCart
+			};
+		} catch (error) {
+			console.error(error);
+
+			const errorResponse = error as ClientResponse;
+
+			if (errorResponse.body.statusCode === 400) {
+				return fail(400, { addToCartError: errorResponse.body.message });
+			}
+
+			return fail(500, { addToCartError: 'Failed to add item to cart' });
+		}
 	}
 };
 
