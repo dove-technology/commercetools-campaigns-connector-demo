@@ -49,22 +49,6 @@ export const removeItem = async (lineItemId: string) => {
 	}
 };
 
-export const updateItemQuantity = async (lineItemId: string, quantity: number) => {
-	const response = await fetch('/api/cart/items', {
-		method: 'PUT',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ lineItemId, quantity })
-	});
-
-	if (response.ok) {
-		state.cart = await response.json();
-	} else {
-		console.error('Failed to update item quantity');
-	}
-};
-
 export const getCart = () => {
 	return state.cart;
 };

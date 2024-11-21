@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { formatCurrency } from '$lib/CurrencyDisplay';
-	import { setCart, getCart, removeItem, updateItemQuantity } from '$lib/Cart.svelte.js';
+	import { setCart, getCart, removeItem } from '$lib/Cart.svelte.js';
 	import AddCouponCode from './AddCouponCode.svelte';
 	import CartCouponCodes from './CartCouponCodes.svelte';
+	import type { Cart } from '@commercetools/platform-sdk';
 
 	let { data, form } = $props();
 
@@ -58,26 +60,40 @@
 									</div>
 
 									<div class="mt-4 sm:mt-0 sm:pr-9">
-										<label for="quantity-{lineItem.id}" class="sr-only"
-											>Quantity, {lineItem.key}</label
-										>
-										<select
-											id="quantity-{lineItem.id}"
-											name="quantity-{lineItem.id}"
-											class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-											onchange={(event) => {
-												if (event.target) {
-													const target = event.target as HTMLSelectElement;
-													updateItemQuantity(lineItem.id, parseInt(target.value));
-												}
+										<form
+											method="POST"
+											action="?/updateItemQuantity"
+											use:enhance={() => {
+												return async ({ update, result }) => {
+													if (result.type === 'success' && result.data?.cart) {
+														setCart(result.data.cart as Cart);
+													}
+
+													update();
+												};
 											}}
 										>
-											{#each Array(10)
-												.fill(0)
-												.map((_, i) => i + 1) as qty}
-												<option value={qty} selected={qty === lineItem.quantity}>{qty}</option>
-											{/each}
-										</select>
+											<label for="quantity-{lineItem.id}" class="sr-only"
+												>Quantity, {lineItem.key}</label
+											>
+											<input type="hidden" name="line-item-id" value={lineItem.id} />
+											<select
+												id="quantity-{lineItem.id}"
+												name="quantity"
+												class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+												onchange={(event) => {
+													const select = event.target as HTMLSelectElement;
+													select.form?.requestSubmit();
+												}}
+											>
+												{#each Array(10)
+													.fill(0)
+													.map((_, i) => i + 1) as qty}
+													<option value={qty} selected={qty === lineItem.quantity}>{qty}</option>
+												{/each}
+											</select>
+											<button class="sr-only" type="submit">Update</button>
+										</form>
 
 										<div class="absolute right-0 top-0">
 											<button

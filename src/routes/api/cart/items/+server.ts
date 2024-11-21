@@ -56,27 +56,6 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 	return json(updatedCart);
 }
 
-export async function PUT({ request, cookies }: RequestEvent) {
-	const { lineItemId, quantity } = await request.json();
-	let cartId = cookies.get('cartId');
-
-	if (!cartId) {
-		return json({ error: 'Cart not found' }, { status: 404 });
-	}
-
-	const cart = await getCart(cartId);
-
-	if (!cart) {
-		throw new Error('Cart not found');
-	}
-
-	const cartVersion = cart.version;
-
-	const updatedCart = await changeLineItemQuantity(cartId, cartVersion, lineItemId, quantity);
-
-	return json(updatedCart);
-}
-
 const createCartAndSetCookie = async (cookies: Cookies) => {
 	const cart = await createCart(getCurrency(cookies), getCountry(cookies));
 

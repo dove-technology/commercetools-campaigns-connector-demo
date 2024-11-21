@@ -1,6 +1,11 @@
 import type { PageServerLoad, Actions } from './$types';
 import { fail, type Cookies, type RequestEvent } from '@sveltejs/kit';
-import { addCouponCode, getCart, updateCouponCodes } from '$lib/CartService';
+import {
+	addCouponCode,
+	getCart,
+	updateCouponCodes,
+	changeLineItemQuantity
+} from '$lib/CartService';
 import type { ClientResponse } from '@commercetools/ts-client';
 import { getCouponCodes } from '$lib/CartHelpers';
 
@@ -51,10 +56,35 @@ export const actions = {
 		const couponCodes = getCouponCodes(cart);
 		const newCouponCodes = couponCodes.filter((code) => code.code !== couponCode);
 
-		console.log(cart.version);
 		const updatedCart = await updateCouponCodes(cart.id, cart.version, newCouponCodes);
 
 		return { cart: updatedCart };
+	},
+	updateItemQuantity: async ({ request, cookies }) => {
+		const data = await request.formData();
+		const lineItemId = data.get('line-item-id');
+		const quantity = data.get('quantity');
+
+		if (!lineItemId || !quantity) {
+			return fail(400, { error: 'Missing line item ID or quantity' });
+		}
+
+		const cart = await getCartFromSession(cookies);
+
+		try {
+			const newQuantity = parseInt(quantity.toString());
+
+			const updatedCart = await changeLineItemQuantity(
+				cart.id,
+				cart.version,
+				lineItemId.toString(),
+				newQuantity
+			);
+
+			return { cart: updatedCart };
+		} catch (error) {
+			return fail(500, { error: 'Failed to update item quantity' });
+		}
 	}
 } satisfies Actions;
 
