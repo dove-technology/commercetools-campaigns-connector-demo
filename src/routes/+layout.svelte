@@ -52,6 +52,25 @@
 							{`${data.currentCountry} - ${data.currentCurrency}`}
 						</a>
 
+						<a href="/set-customer" class="p-2 text-gray-400 hover:text-gray-500 lg:ml-4">
+							<span class="sr-only">Account</span>
+							<svg
+								class="size-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								aria-hidden="true"
+								data-slot="icon"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+								></path>
+							</svg>
+						</a>
+
 						<!-- Cart -->
 						<div class="ml-4 flow-root lg:ml-6">
 							<a href="/cart" class="group -m-2 flex items-center p-2">

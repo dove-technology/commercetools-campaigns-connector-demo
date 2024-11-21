@@ -172,3 +172,34 @@ export async function updateCouponCodes(
 
 	return result.body;
 }
+
+export async function setCustomer(
+	cartId: string,
+	cartVersion: number,
+	customerId: string,
+	customerEmail: string
+) {
+	const apiRoot = createClient();
+
+	const result = await apiRoot
+		.carts()
+		.withId({ ID: cartId })
+		.post({
+			body: {
+				version: cartVersion,
+				actions: [
+					{
+						action: 'setCustomerId',
+						customerId
+					},
+					{
+						action: 'setCustomerEmail',
+						email: customerEmail
+					}
+				]
+			}
+		})
+		.execute();
+
+	return result.body;
+}
