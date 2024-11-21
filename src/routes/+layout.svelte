@@ -5,7 +5,7 @@
 	import DoveTechWingLogo from '$lib/DoveTechWingLogo.svelte';
 
 	let { data, children } = $props();
-	let count = $derived(getCart()?.lineItems.length);
+	let count = $derived(getCart()?.lineItems.reduce((acc, item) => acc + item.quantity, 0));
 	let cartLoaded = $derived(getCart() !== undefined);
 
 	onMount(async () => {
