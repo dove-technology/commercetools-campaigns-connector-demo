@@ -2,7 +2,7 @@ import { json, type RequestEvent } from '@sveltejs/kit';
 import { getCart } from '$lib/CartService';
 
 export async function GET({ cookies }: RequestEvent) {
-	let cartId = cookies.get('cartId');
+	const cartId = cookies.get('cartId');
 
 	if (!cartId) {
 		return json(null);

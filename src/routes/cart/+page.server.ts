@@ -11,7 +11,7 @@ import type { ClientResponse } from '@commercetools/ts-client';
 import { getCouponCodes } from '$lib/CartHelpers';
 
 export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
-	let cartId = cookies.get('cartId');
+	const cartId = cookies.get('cartId');
 
 	if (!cartId) {
 		return {
