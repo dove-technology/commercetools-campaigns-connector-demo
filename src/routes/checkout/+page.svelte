@@ -16,10 +16,11 @@
 			logError: true,
 			onInfo: (message) => {
 				switch (message.code) {
-					case 'checkout_completed':
+					case 'checkout_completed': {
 						const id = (message.payload as { order: { id: string } }).order.id;
 						goto(`/order-confirmation?orderId=${id}`);
 						break;
+					}
 					case 'checkout_cancelled':
 						goto(`/cart`);
 						break;
