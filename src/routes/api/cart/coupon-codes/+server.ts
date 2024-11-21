@@ -1,8 +1,7 @@
 import { createClient } from '$lib/CreateClient';
-import type { CartCouponCode } from '$lib/types/DovetechCouponCodes';
-import type { Cart } from '@commercetools/platform-sdk';
 import { json, type RequestEvent } from '@sveltejs/kit';
 import { getCart } from '$lib/CartService';
+import { getCouponCodes } from '$lib/CartHelpers';
 
 export async function DELETE({ request, cookies }: RequestEvent) {
 	const apiRoot = createClient();
@@ -44,13 +43,3 @@ export async function DELETE({ request, cookies }: RequestEvent) {
 
 	return json(result.body);
 }
-
-const getCouponCodes = (cart: Cart): CartCouponCode[] => {
-	let serialisedCodes = cart.custom?.fields['dovetech-discounts-couponCodes'] ?? '';
-
-	if (serialisedCodes) {
-		return JSON.parse(serialisedCodes);
-	}
-
-	return [];
-};
