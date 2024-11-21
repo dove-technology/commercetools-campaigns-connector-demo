@@ -35,10 +35,11 @@ export const actions: Actions = {
 
 		try {
 			const updatedCart = await setCustomer(cart.id, cart.version, undefined, undefined);
+
 			return { cart: updatedCart };
 		} catch (error) {
 			console.error(error);
-			return { error: 'Failed to clear customer on cart' };
+			return fail(500, { clearCustomerError: 'Failed to clear customer on cart' });
 		}
 	},
 	setCustomer: async ({ request, cookies }) => {
@@ -46,7 +47,7 @@ export const actions: Actions = {
 		const email = formData.get('email') as string;
 
 		if (!email) {
-			return { error: 'Missing required fields' };
+			return { setCustomerError: 'Enter an email' };
 		}
 
 		const apiRoot = createClient();
@@ -61,7 +62,10 @@ export const actions: Actions = {
 			.execute();
 
 		if (result.body.results.length !== 1) {
-			return fail(400, { error: 'Customer not found' });
+			return fail(400, {
+				setCustomerError:
+					'Customer not found. Find a valid customer in the commercetools Merchant Center'
+			});
 		}
 
 		const customer = result.body.results[0];
@@ -85,7 +89,7 @@ export const actions: Actions = {
 			return { cart: updatedCart };
 		} catch (error) {
 			console.error(error);
-			return { error: 'Failed to set customer on cart' };
+			return fail(500, { setCustomerError: 'Failed to set customer on cart' });
 		}
 	}
 };
