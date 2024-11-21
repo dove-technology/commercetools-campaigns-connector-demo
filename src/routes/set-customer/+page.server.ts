@@ -3,20 +3,50 @@ import { getCart, setCustomer } from '$lib/CartService';
 import { createClient } from '$lib/CreateClient';
 import { fail } from '@sveltejs/kit';
 
+export const load = async ({ cookies }) => {
+	const customerId = cookies.get('customerId');
+
+	if (!customerId) {
+		return { customer: null };
+	}
+
+	const apiRoot = createClient();
+
+	const result = await apiRoot.customers().withId({ ID: customerId }).get().execute();
+
+	return { customer: result.body };
+};
+
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
+	clearCustomer: async ({ cookies }) => {
+		cookies.delete('customerId', { path: '/' });
+
+		const cartId = cookies.get('cartId');
+
+		if (!cartId) {
+			return { cart: undefined };
+		}
+
+		const cart = await getCart(cartId);
+
+		if (!cart) {
+			return { cart: undefined };
+		}
+
+		try {
+			const updatedCart = await setCustomer(cart.id, cart.version, undefined, undefined);
+			return { cart: updatedCart };
+		} catch (error) {
+			console.error(error);
+			return { error: 'Failed to clear customer on cart' };
+		}
+	},
+	setCustomer: async ({ request, cookies }) => {
 		const formData = await request.formData();
 		const email = formData.get('email') as string;
 
-		const cartId = cookies.get('cartId');
-		const cart = await getCart(cartId!);
-
 		if (!email) {
 			return { error: 'Missing required fields' };
-		}
-
-		if (!cart) {
-			return { error: 'Cart not found' };
 		}
 
 		const apiRoot = createClient();
@@ -36,11 +66,26 @@ export const actions: Actions = {
 
 		const customer = result.body.results[0];
 
+		cookies.set('customerId', customer.id, { path: '/' });
+
+		const cartId = cookies.get('cartId');
+
+		if (!cartId) {
+			return { cart: undefined };
+		}
+
+		const cart = await getCart(cartId);
+
+		if (!cart) {
+			return { cart: undefined };
+		}
+
 		try {
 			const updatedCart = await setCustomer(cart.id, cart.version, customer.id, customer.email);
 			return { cart: updatedCart };
 		} catch (error) {
-			return { error: 'Failed to set customer ID' };
+			console.error(error);
+			return { error: 'Failed to set customer on cart' };
 		}
 	}
 };

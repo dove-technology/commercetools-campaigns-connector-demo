@@ -176,8 +176,8 @@ export async function updateCouponCodes(
 export async function setCustomer(
 	cartId: string,
 	cartVersion: number,
-	customerId: string,
-	customerEmail: string
+	customerId: string | undefined,
+	customerEmail: string | undefined
 ) {
 	const apiRoot = createClient();
 
@@ -190,7 +190,7 @@ export async function setCustomer(
 				actions: [
 					{
 						action: 'setCustomerId',
-						customerId
+						customerId: customerId
 					},
 					{
 						action: 'setCustomerEmail',
