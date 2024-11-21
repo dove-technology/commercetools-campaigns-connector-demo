@@ -4,6 +4,7 @@ import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
 import { getCart, createCart, addLineItem } from '$lib/CartService';
 import { fail, type Cookies } from '@sveltejs/kit';
 import type { ClientResponse } from '@commercetools/ts-client';
+import { getCustomer } from '$lib/CustomerService';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const productId = params.id;
@@ -64,7 +65,24 @@ export const actions: Actions = {
 };
 
 const createCartAndSetCookie = async (cookies: Cookies) => {
-	const cart = await createCart(getCurrency(cookies), getCountry(cookies));
+	const customerIdCookie = cookies.get('customerId');
+
+	let customerId;
+	let customerEmail;
+
+	// if we have a customer ID, set the customer on the cart
+	if (customerIdCookie) {
+		const customer = await getCustomer(customerIdCookie);
+		customerId = customer.id;
+		customerEmail = customer.email;
+	}
+
+	const cart = await createCart(
+		getCurrency(cookies),
+		getCountry(cookies),
+		customerId,
+		customerEmail
+	);
 
 	cookies.set('cartId', cart.id, { path: '/' });
 

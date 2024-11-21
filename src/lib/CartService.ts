@@ -2,14 +2,21 @@ import { createClient } from '$lib/CreateClient';
 import type { ClientResponse } from '@commercetools/ts-client';
 import type { CartCouponCode } from './types/DovetechCouponCodes';
 
-export async function createCart(currency: string, country: string) {
+export async function createCart(
+	currency: string,
+	country: string,
+	customerId?: string,
+	customerEmail?: string
+) {
 	const apiRoot = createClient();
 	const response = await apiRoot
 		.carts()
 		.post({
 			body: {
 				currency,
-				country
+				country,
+				customerId,
+				customerEmail
 			}
 		})
 		.execute();

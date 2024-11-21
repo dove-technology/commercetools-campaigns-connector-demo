@@ -2,6 +2,7 @@ import type { Actions } from './$types';
 import { getCart, setCustomer } from '$lib/CartService';
 import { createClient } from '$lib/CreateClient';
 import { fail } from '@sveltejs/kit';
+import { getCustomer } from '$lib/CustomerService';
 
 export const load = async ({ cookies }) => {
 	const customerId = cookies.get('customerId');
@@ -10,11 +11,9 @@ export const load = async ({ cookies }) => {
 		return { customer: null };
 	}
 
-	const apiRoot = createClient();
+	const customer = await getCustomer(customerId);
 
-	const result = await apiRoot.customers().withId({ ID: customerId }).get().execute();
-
-	return { customer: result.body };
+	return { customer };
 };
 
 export const actions: Actions = {
