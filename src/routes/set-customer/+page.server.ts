@@ -35,7 +35,6 @@ export const actions: Actions = {
 		}
 
 		const customer = result.body.results[0];
-		console.log(customer);
 
 		try {
 			const updatedCart = await setCustomer(cart.id, cart.version, customer.id, customer.email);
