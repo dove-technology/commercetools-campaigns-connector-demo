@@ -23,15 +23,9 @@ export const actions: Actions = {
 
 		const result = await apiRoot
 			.customers()
-			.search() // needs customers to be indexed, just lookup a customer by email?
-			.post({
-				body: {
-					query: {
-						fullText: {
-							field: 'email',
-							value: email
-						}
-					}
+			.get({
+				queryArgs: {
+					where: `email="${email}"`
 				}
 			})
 			.execute();
@@ -44,7 +38,7 @@ export const actions: Actions = {
 		console.log(customer);
 
 		try {
-			const updatedCart = await setCustomer(cart.id, cart.version, customer.id, email);
+			const updatedCart = await setCustomer(cart.id, cart.version, customer.id, customer.email);
 			return { cart: updatedCart };
 		} catch (error) {
 			return { error: 'Failed to set customer ID' };
