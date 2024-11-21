@@ -69,7 +69,7 @@
 														setCart(result.data.cart as Cart);
 													}
 
-													update();
+													await update();
 												};
 											}}
 										>
@@ -105,7 +105,7 @@
 															setCart(result.data.cart as Cart);
 														}
 
-														update();
+														await update();
 													};
 												}}
 											>

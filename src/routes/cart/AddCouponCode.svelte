@@ -13,16 +13,14 @@
 	<form
 		method="POST"
 		action="?/addCouponCode"
-		onsubmit={() => {
-			addingCode = true;
-		}}
 		use:enhance={() => {
+			addingCode = true;
 			return async ({ update, result }) => {
 				if (result.type === 'success' && result.data?.cart) {
 					setCart(result.data.cart as Cart);
 				}
 
-				update();
+				await update();
 				addingCode = false;
 			};
 		}}
