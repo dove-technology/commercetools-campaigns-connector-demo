@@ -27,10 +27,6 @@ export const actions = {
 			return fail(400, { error: 'Enter a code' });
 		}
 
-		if (couponCode === 'InvalidTestCode') {
-			return fail(400, { 'coupon-code': couponCode, error: 'Invalid coupon code' });
-		}
-
 		const cartId = cookies.get('cartId');
 
 		if (!cartId) {
