@@ -1,7 +1,8 @@
 import type { PageServerLoad, Actions } from './$types';
-import { fail, type RequestEvent } from '@sveltejs/kit';
-import { addCouponCode, getCart } from '$lib/CartService';
+import { fail, type Cookies, type RequestEvent } from '@sveltejs/kit';
+import { addCouponCode, getCart, updateCouponCodes } from '$lib/CartService';
 import type { ClientResponse } from '@commercetools/ts-client';
+import { getCouponCodes } from '$lib/CartHelpers';
 
 export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
 	let cartId = cookies.get('cartId');
@@ -26,20 +27,10 @@ export const actions = {
 			return fail(400, { error: 'Enter a code' });
 		}
 
-		const cartId = cookies.get('cartId');
-
-		if (!cartId) {
-			throw new Error('No cart');
-		}
-
-		const cart = await getCart(cartId);
-
-		if (!cart) {
-			throw new Error('Cart not found');
-		}
+		const cart = await getCartFromSession(cookies);
 
 		try {
-			const updatedCart = await addCouponCode(cartId, cart.version, couponCode.toString());
+			const updatedCart = await addCouponCode(cart.id, cart.version, couponCode.toString());
 
 			return { cart: updatedCart };
 		} catch (error) {
@@ -51,5 +42,34 @@ export const actions = {
 
 			return fail(500, { error: 'Failed to set coupon code' });
 		}
+	},
+	removeCouponCode: async ({ request, cookies }) => {
+		const data = await request.formData();
+		const couponCode = data.get('coupon-code');
+		const cart = await getCartFromSession(cookies);
+
+		const couponCodes = getCouponCodes(cart);
+		const newCouponCodes = couponCodes.filter((code) => code.code !== couponCode);
+
+		console.log(cart.version);
+		const updatedCart = await updateCouponCodes(cart.id, cart.version, newCouponCodes);
+
+		return { cart: updatedCart };
 	}
 } satisfies Actions;
+
+const getCartFromSession = async (cookies: Cookies) => {
+	const cartId = cookies.get('cartId');
+
+	if (!cartId) {
+		throw new Error('No cart');
+	}
+
+	const cart = await getCart(cartId);
+
+	if (!cart) {
+		throw new Error('Cart not found');
+	}
+
+	return cart;
+};

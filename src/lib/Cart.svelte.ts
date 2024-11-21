@@ -65,22 +65,6 @@ export const updateItemQuantity = async (lineItemId: string, quantity: number) =
 	}
 };
 
-export const removeCouponCode = async (couponCode: string) => {
-	const response = await fetch('/api/cart/coupon-codes', {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ couponCode })
-	});
-
-	if (response.ok) {
-		state.cart = await response.json();
-	} else {
-		console.error('Failed to remove coupon code');
-	}
-};
-
 export const getCart = () => {
 	return state.cart;
 };
