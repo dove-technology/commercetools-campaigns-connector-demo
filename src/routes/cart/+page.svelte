@@ -184,12 +184,12 @@
 
 						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 							<dt class="flex items-center text-sm text-gray-600">
-								<span>Shipping estimate</span>
+								<span>Shipping cost</span>
 							</dt>
 							<dd class="text-sm font-medium text-gray-900">
 								{cart.shippingInfo?.price
 									? formatCurrency(cart.shippingInfo.price, data.currentLanguage)
-									: '-'}
+									: 'Calculated later'}
 							</dd>
 						</div>
 
