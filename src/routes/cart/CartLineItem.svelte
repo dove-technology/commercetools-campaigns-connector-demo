@@ -45,14 +45,16 @@
 				</div>
 
 				<p class="text-right text-sm font-medium text-gray-900">
-					<span class="line-through">
-						{formatFractionalDigits(
-							subTotal,
-							cart.totalPrice.fractionDigits,
-							cart.totalPrice.currencyCode,
-							$page.data.currentLanguage
-						)}
-					</span>
+					{#if subTotal !== total}
+						<span class="line-through">
+							{formatFractionalDigits(
+								subTotal,
+								cart.totalPrice.fractionDigits,
+								cart.totalPrice.currencyCode,
+								$page.data.currentLanguage
+							)}
+						</span>
+					{/if}
 					{formatFractionalDigits(
 						total,
 						cart.totalPrice.fractionDigits,
