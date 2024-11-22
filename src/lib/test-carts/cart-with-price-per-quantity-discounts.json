@@ -1,268 +1,268 @@
 {
-  "type": "Cart",
-  "id": "9273a1d3-d137-450a-8d8f-196c6e86c032",
-  "version": 45,
-  "versionModifiedAt": "2024-11-22T15:36:51.737Z",
-  "lastMessageSequenceNumber": 1,
-  "createdAt": "2024-11-22T15:25:01.866Z",
-  "lastModifiedAt": "2024-11-22T15:36:51.737Z",
-  "lastModifiedBy": {
-    "clientId": "OROGSNAOBwHXXmqZVibihq_X",
-    "isPlatformClient": false
-  },
-  "createdBy": {
-    "clientId": "OROGSNAOBwHXXmqZVibihq_X",
-    "isPlatformClient": false
-  },
-  "lineItems": [
-    {
-      "id": "e83c7d11-ae4c-4577-b17f-3a6430886856",
-      "productId": "9fd90fef-87e1-4a77-8647-64bcad73d525",
-      "productKey": "raven-bowl",
-      "name": {
-        "en-US": "Raven Bowl",
-        "en-GB": "Raven Bowl",
-        "de-DE": "Suppenschüssel >Raven<"
-      },
-      "productType": {
-        "typeId": "product-type",
-        "id": "e04b1724-013c-4d6c-8f53-7a8807fdbe3a",
-        "version": 1
-      },
-      "productSlug": {
-        "en-US": "raven-bowl",
-        "en-GB": "raven-bowl",
-        "de-DE": "rabenschssel"
-      },
-      "variant": {
-        "id": 1,
-        "sku": "RB-093",
-        "prices": [
-          {
-            "id": "9730d831-6b61-492c-9c9f-02dd1b01d9b7",
-            "value": {
-              "type": "centPrecision",
-              "currencyCode": "EUR",
-              "centAmount": 299,
-              "fractionDigits": 2
-            },
-            "country": "DE"
-          },
-          {
-            "id": "2681d084-991c-4b8b-aca7-221bc78baf24",
-            "value": {
-              "type": "centPrecision",
-              "currencyCode": "GBP",
-              "centAmount": 299,
-              "fractionDigits": 2
-            },
-            "country": "GB"
-          },
-          {
-            "id": "12366b31-a976-49b5-b02f-d58bff4da650",
-            "value": {
-              "type": "centPrecision",
-              "currencyCode": "USD",
-              "centAmount": 299,
-              "fractionDigits": 2
-            },
-            "country": "US"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Raven_Bowl-1.1.jpeg",
-            "dimensions": {
-              "w": 4232,
-              "h": 2904
-            }
-          }
-        ],
-        "attributes": [
-          {
-            "name": "productspec",
-            "value": {
-              "en-GB": "- Includes 1 bowl",
-              "en-US": "- Includes 1 bowl",
-              "de-DE": "- Enthält 1 Schüssel"
-            }
-          },
-          {
-            "name": "color",
-            "value": {
-              "en-GB": "White:#FFFFFF",
-              "de-DE": "Weiß:#FFFFFF",
-              "en-US": "White:#FFFFFF"
-            }
-          }
-        ],
-        "assets": [],
-        "availability": {
-          "isOnStock": true,
-          "availableQuantity": 100,
-          "version": 1,
-          "id": "e416ffa7-14ad-439a-8a1f-c8ea81d117e4"
-        }
-      },
-      "price": {
-        "id": "9730d831-6b61-492c-9c9f-02dd1b01d9b7",
-        "value": {
-          "type": "centPrecision",
-          "currencyCode": "EUR",
-          "centAmount": 299,
-          "fractionDigits": 2
-        },
-        "country": "DE"
-      },
-      "quantity": 3,
-      "discountedPrice": {
-        "value": {
-          "type": "centPrecision",
-          "currencyCode": "EUR",
-          "centAmount": 200,
-          "fractionDigits": 2
-        },
-        "includedDiscounts": [
-          {
-            "discount": {
-              "typeId": "direct-discount",
-              "id": "24fd3ef1-37b2-44df-9df8-0d5668470230"
-            },
-            "discountedAmount": {
-              "type": "centPrecision",
-              "currencyCode": "EUR",
-              "centAmount": 99,
-              "fractionDigits": 2
-            }
-          }
-        ]
-      },
-      "discountedPricePerQuantity": [
-        {
-          "quantity": 1,
-          "discountedPrice": {
-            "value": {
-              "type": "centPrecision",
-              "currencyCode": "EUR",
-              "centAmount": 200,
-              "fractionDigits": 2
-            },
-            "includedDiscounts": [
-              {
-                "discount": {
-                  "typeId": "direct-discount",
-                  "id": "24fd3ef1-37b2-44df-9df8-0d5668470230"
-                },
-                "discountedAmount": {
-                  "type": "centPrecision",
-                  "currencyCode": "EUR",
-                  "centAmount": 99,
-                  "fractionDigits": 2
-                }
-              }
-            ]
-          }
-        },
-        {
-          "quantity": 2,
-          "discountedPrice": {
-            "value": {
-              "type": "centPrecision",
-              "currencyCode": "EUR",
-              "centAmount": 199,
-              "fractionDigits": 2
-            },
-            "includedDiscounts": [
-              {
-                "discount": {
-                  "typeId": "direct-discount",
-                  "id": "24fd3ef1-37b2-44df-9df8-0d5668470230"
-                },
-                "discountedAmount": {
-                  "type": "centPrecision",
-                  "currencyCode": "EUR",
-                  "centAmount": 100,
-                  "fractionDigits": 2
-                }
-              }
-            ]
-          }
-        }
-      ],
-      "perMethodTaxRate": [],
-      "addedAt": "2024-11-22T15:29:50.142Z",
-      "lastModifiedAt": "2024-11-22T15:36:51.290Z",
-      "state": [
-        {
-          "quantity": 3,
-          "state": {
-            "typeId": "state",
-            "id": "fce0e3a1-1ac3-47e4-b936-89d1a53c9905"
-          }
-        }
-      ],
-      "priceMode": "Platform",
-      "lineItemMode": "Standard",
-      "totalPrice": {
-        "type": "centPrecision",
-        "currencyCode": "EUR",
-        "centAmount": 598,
-        "fractionDigits": 2
-      },
-      "taxedPricePortions": []
-    }
-  ],
-  "cartState": "Active",
-  "totalPrice": {
-    "type": "centPrecision",
-    "currencyCode": "EUR",
-    "centAmount": 598,
-    "fractionDigits": 2
-  },
-  "country": "DE",
-  "shippingMode": "Single",
-  "shipping": [],
-  "customLineItems": [],
-  "discountCodes": [],
-  "directDiscounts": [
-    {
-      "id": "24fd3ef1-37b2-44df-9df8-0d5668470230",
-      "value": {
-        "type": "absolute",
-        "money": [
-          {
-            "type": "centPrecision",
-            "currencyCode": "EUR",
-            "centAmount": 299,
-            "fractionDigits": 2
-          }
-        ]
-      },
-      "target": {
-        "type": "lineItems",
-        "predicate": "sku = \"RB-093\""
-      },
-      "references": []
-    }
-  ],
-  "custom": {
-    "type": {
-      "typeId": "type",
-      "id": "51cc98cc-4b3f-4d8b-8320-ec53836c3f88"
-    },
-    "fields": {
-      "dovetech-discounts-couponCodes": "[]",
-      "dovetech-discounts-evaluationResponse": "{\"actions\":[{\"id\":\"72d2965c-f9c8-49cb-9a19-8ea3b3dfbe56\",\"discountId\":\"e919f82b-6f83-4151-a048-4a489721ba50\",\"type\":\"AmountOffLineItem\",\"qualifiedCouponCode\":null,\"amountOffType\":\"PercentOff\",\"value\":100,\"amountOff\":2.99,\"displayMessages\":[]}],\"basket\":{\"total\":5.98,\"totalAmountOff\":2.99,\"items\":[{\"total\":5.98,\"totalAmountOff\":2.99,\"actions\":[{\"id\":\"72d2965c-f9c8-49cb-9a19-8ea3b3dfbe56\",\"subItemId\":1,\"amountOff\":2.99}]}]},\"aggregates\":{\"total\":5.98,\"totalAmountOff\":2.99},\"costs\":[],\"commitId\":null,\"evaluationLog\":null}",
-      "dovetech-discounts-evaluationCurrency": "EUR"
-    }
-  },
-  "inventoryMode": "None",
-  "taxMode": "Platform",
-  "taxRoundingMode": "HalfEven",
-  "taxCalculationMode": "LineItemLevel",
-  "deleteDaysAfterLastModification": 90,
-  "refusedGifts": [],
-  "origin": "Customer",
-  "itemShippingAddresses": [],
-  "totalLineItemQuantity": 3
+	"type": "Cart",
+	"id": "9273a1d3-d137-450a-8d8f-196c6e86c032",
+	"version": 45,
+	"versionModifiedAt": "2024-11-22T15:36:51.737Z",
+	"lastMessageSequenceNumber": 1,
+	"createdAt": "2024-11-22T15:25:01.866Z",
+	"lastModifiedAt": "2024-11-22T15:36:51.737Z",
+	"lastModifiedBy": {
+		"clientId": "OROGSNAOBwHXXmqZVibihq_X",
+		"isPlatformClient": false
+	},
+	"createdBy": {
+		"clientId": "OROGSNAOBwHXXmqZVibihq_X",
+		"isPlatformClient": false
+	},
+	"lineItems": [
+		{
+			"id": "e83c7d11-ae4c-4577-b17f-3a6430886856",
+			"productId": "9fd90fef-87e1-4a77-8647-64bcad73d525",
+			"productKey": "raven-bowl",
+			"name": {
+				"en-US": "Raven Bowl",
+				"en-GB": "Raven Bowl",
+				"de-DE": "Suppenschüssel >Raven<"
+			},
+			"productType": {
+				"typeId": "product-type",
+				"id": "e04b1724-013c-4d6c-8f53-7a8807fdbe3a",
+				"version": 1
+			},
+			"productSlug": {
+				"en-US": "raven-bowl",
+				"en-GB": "raven-bowl",
+				"de-DE": "rabenschssel"
+			},
+			"variant": {
+				"id": 1,
+				"sku": "RB-093",
+				"prices": [
+					{
+						"id": "9730d831-6b61-492c-9c9f-02dd1b01d9b7",
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "EUR",
+							"centAmount": 299,
+							"fractionDigits": 2
+						},
+						"country": "DE"
+					},
+					{
+						"id": "2681d084-991c-4b8b-aca7-221bc78baf24",
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "GBP",
+							"centAmount": 299,
+							"fractionDigits": 2
+						},
+						"country": "GB"
+					},
+					{
+						"id": "12366b31-a976-49b5-b02f-d58bff4da650",
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "USD",
+							"centAmount": 299,
+							"fractionDigits": 2
+						},
+						"country": "US"
+					}
+				],
+				"images": [
+					{
+						"url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Raven_Bowl-1.1.jpeg",
+						"dimensions": {
+							"w": 4232,
+							"h": 2904
+						}
+					}
+				],
+				"attributes": [
+					{
+						"name": "productspec",
+						"value": {
+							"en-GB": "- Includes 1 bowl",
+							"en-US": "- Includes 1 bowl",
+							"de-DE": "- Enthält 1 Schüssel"
+						}
+					},
+					{
+						"name": "color",
+						"value": {
+							"en-GB": "White:#FFFFFF",
+							"de-DE": "Weiß:#FFFFFF",
+							"en-US": "White:#FFFFFF"
+						}
+					}
+				],
+				"assets": [],
+				"availability": {
+					"isOnStock": true,
+					"availableQuantity": 100,
+					"version": 1,
+					"id": "e416ffa7-14ad-439a-8a1f-c8ea81d117e4"
+				}
+			},
+			"price": {
+				"id": "9730d831-6b61-492c-9c9f-02dd1b01d9b7",
+				"value": {
+					"type": "centPrecision",
+					"currencyCode": "EUR",
+					"centAmount": 299,
+					"fractionDigits": 2
+				},
+				"country": "DE"
+			},
+			"quantity": 3,
+			"discountedPrice": {
+				"value": {
+					"type": "centPrecision",
+					"currencyCode": "EUR",
+					"centAmount": 200,
+					"fractionDigits": 2
+				},
+				"includedDiscounts": [
+					{
+						"discount": {
+							"typeId": "direct-discount",
+							"id": "24fd3ef1-37b2-44df-9df8-0d5668470230"
+						},
+						"discountedAmount": {
+							"type": "centPrecision",
+							"currencyCode": "EUR",
+							"centAmount": 99,
+							"fractionDigits": 2
+						}
+					}
+				]
+			},
+			"discountedPricePerQuantity": [
+				{
+					"quantity": 1,
+					"discountedPrice": {
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "EUR",
+							"centAmount": 200,
+							"fractionDigits": 2
+						},
+						"includedDiscounts": [
+							{
+								"discount": {
+									"typeId": "direct-discount",
+									"id": "24fd3ef1-37b2-44df-9df8-0d5668470230"
+								},
+								"discountedAmount": {
+									"type": "centPrecision",
+									"currencyCode": "EUR",
+									"centAmount": 99,
+									"fractionDigits": 2
+								}
+							}
+						]
+					}
+				},
+				{
+					"quantity": 2,
+					"discountedPrice": {
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "EUR",
+							"centAmount": 199,
+							"fractionDigits": 2
+						},
+						"includedDiscounts": [
+							{
+								"discount": {
+									"typeId": "direct-discount",
+									"id": "24fd3ef1-37b2-44df-9df8-0d5668470230"
+								},
+								"discountedAmount": {
+									"type": "centPrecision",
+									"currencyCode": "EUR",
+									"centAmount": 100,
+									"fractionDigits": 2
+								}
+							}
+						]
+					}
+				}
+			],
+			"perMethodTaxRate": [],
+			"addedAt": "2024-11-22T15:29:50.142Z",
+			"lastModifiedAt": "2024-11-22T15:36:51.290Z",
+			"state": [
+				{
+					"quantity": 3,
+					"state": {
+						"typeId": "state",
+						"id": "fce0e3a1-1ac3-47e4-b936-89d1a53c9905"
+					}
+				}
+			],
+			"priceMode": "Platform",
+			"lineItemMode": "Standard",
+			"totalPrice": {
+				"type": "centPrecision",
+				"currencyCode": "EUR",
+				"centAmount": 598,
+				"fractionDigits": 2
+			},
+			"taxedPricePortions": []
+		}
+	],
+	"cartState": "Active",
+	"totalPrice": {
+		"type": "centPrecision",
+		"currencyCode": "EUR",
+		"centAmount": 598,
+		"fractionDigits": 2
+	},
+	"country": "DE",
+	"shippingMode": "Single",
+	"shipping": [],
+	"customLineItems": [],
+	"discountCodes": [],
+	"directDiscounts": [
+		{
+			"id": "24fd3ef1-37b2-44df-9df8-0d5668470230",
+			"value": {
+				"type": "absolute",
+				"money": [
+					{
+						"type": "centPrecision",
+						"currencyCode": "EUR",
+						"centAmount": 299,
+						"fractionDigits": 2
+					}
+				]
+			},
+			"target": {
+				"type": "lineItems",
+				"predicate": "sku = \"RB-093\""
+			},
+			"references": []
+		}
+	],
+	"custom": {
+		"type": {
+			"typeId": "type",
+			"id": "51cc98cc-4b3f-4d8b-8320-ec53836c3f88"
+		},
+		"fields": {
+			"dovetech-discounts-couponCodes": "[]",
+			"dovetech-discounts-evaluationResponse": "{\"actions\":[{\"id\":\"72d2965c-f9c8-49cb-9a19-8ea3b3dfbe56\",\"discountId\":\"e919f82b-6f83-4151-a048-4a489721ba50\",\"type\":\"AmountOffLineItem\",\"qualifiedCouponCode\":null,\"amountOffType\":\"PercentOff\",\"value\":100,\"amountOff\":2.99,\"displayMessages\":[]}],\"basket\":{\"total\":5.98,\"totalAmountOff\":2.99,\"items\":[{\"total\":5.98,\"totalAmountOff\":2.99,\"actions\":[{\"id\":\"72d2965c-f9c8-49cb-9a19-8ea3b3dfbe56\",\"subItemId\":1,\"amountOff\":2.99}]}]},\"aggregates\":{\"total\":5.98,\"totalAmountOff\":2.99},\"costs\":[],\"commitId\":null,\"evaluationLog\":null}",
+			"dovetech-discounts-evaluationCurrency": "EUR"
+		}
+	},
+	"inventoryMode": "None",
+	"taxMode": "Platform",
+	"taxRoundingMode": "HalfEven",
+	"taxCalculationMode": "LineItemLevel",
+	"deleteDaysAfterLastModification": 90,
+	"refusedGifts": [],
+	"origin": "Customer",
+	"itemShippingAddresses": [],
+	"totalLineItemQuantity": 3
 }
