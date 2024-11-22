@@ -26,7 +26,7 @@ export const getCartDiscountAmount = (cart: Cart | undefined): number => {
 		return 0;
 	}
 
-	return cart.lineItems.reduce((acc, lineItem) => {
+	const lineItemsDiscountAmount = cart.lineItems.reduce((acc, lineItem) => {
 		const lineItemSubtotal = getLineItemSubtotal(lineItem);
 		const lineItemTotal = getLineItemTotal(lineItem);
 
@@ -34,6 +34,9 @@ export const getCartDiscountAmount = (cart: Cart | undefined): number => {
 
 		return acc + discountAmount;
 	}, 0);
+
+	// include discountOnTotalPrice for completeness, Dovetech won't return discounts like this
+	return lineItemsDiscountAmount + (cart.discountOnTotalPrice?.discountedAmount?.centAmount ?? 0);
 };
 
 export const getLineItemSubtotal = (lineItem: LineItem) => {
