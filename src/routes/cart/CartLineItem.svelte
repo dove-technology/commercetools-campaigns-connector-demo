@@ -10,6 +10,8 @@
 		cart,
 		currentLanguage
 	}: { lineItem: LineItem; cart: Cart; currentLanguage: string } = $props();
+
+	const lineItemTotals = $derived(getLineItemTotals(lineItem));
 </script>
 
 <li class="flex py-6 sm:py-10">
@@ -46,14 +48,14 @@
 				<p class="text-right text-sm font-medium text-gray-900">
 					<span class="line-through">
 						{formatFractionalDigits(
-							getLineItemTotals(lineItem).subTotal,
+							lineItemTotals.subTotal,
 							cart.totalPrice.fractionDigits,
 							cart.totalPrice.currencyCode,
 							currentLanguage
 						)}
 					</span>
 					{formatFractionalDigits(
-						getLineItemTotals(lineItem).total,
+						lineItemTotals.total,
 						cart.totalPrice.fractionDigits,
 						cart.totalPrice.currencyCode,
 						currentLanguage
