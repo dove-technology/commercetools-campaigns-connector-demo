@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { formatCurrency, formatFractionalDigits } from '$lib/CurrencyDisplay';
+	import { formatMoney, formatCurrencyMinorUnits } from '$lib/CurrencyDisplay';
 	import { setCart, getCart } from '$lib/Cart.svelte.js';
 	import AddCouponCode from './AddCouponCode.svelte';
 	import CartCouponCodes from './CartCouponCodes.svelte';
@@ -53,7 +53,7 @@
 						<div class="flex items-center justify-between">
 							<dt class="text-sm text-gray-600">Subtotal</dt>
 							<dd class="text-sm font-medium text-gray-900">
-								{formatFractionalDigits(
+								{formatCurrencyMinorUnits(
 									cartSubtotal,
 									cart.totalPrice.fractionDigits,
 									cart.totalPrice.currencyCode,
@@ -66,7 +66,7 @@
 							<div class="flex items-center justify-between text-green-700">
 								<dt class="text-sm">Discount</dt>
 								<dd class="text-sm font-medium">
-									-{formatFractionalDigits(
+									-{formatCurrencyMinorUnits(
 										cartDiscountAmount,
 										cart.totalPrice.fractionDigits,
 										cart.totalPrice.currencyCode,
@@ -82,7 +82,7 @@
 							</dt>
 							<dd class="text-sm font-medium text-gray-900">
 								{cart.shippingInfo?.price
-									? formatCurrency(cart.shippingInfo.price, data.currentLanguage)
+									? formatMoney(cart.shippingInfo.price, data.currentLanguage)
 									: 'Calculated later'}
 							</dd>
 						</div>
@@ -96,7 +96,7 @@
 								</dt>
 								<dd class="text-sm font-medium">
 									-{cart.shippingInfo?.price
-										? formatCurrency(cart.shippingInfo.discountedPrice.value, data.currentLanguage)
+										? formatMoney(cart.shippingInfo.discountedPrice.value, data.currentLanguage)
 										: '-'}
 								</dd>
 							</div>
@@ -105,7 +105,7 @@
 						<div class="flex items-center justify-between border-t border-gray-200 pt-4">
 							<dt class="text-base font-medium text-gray-900">Order total</dt>
 							<dd class="text-base font-medium text-gray-900">
-								{cart.totalPrice ? formatCurrency(cart.totalPrice, data.currentLanguage) : '-'}
+								{cart.totalPrice ? formatMoney(cart.totalPrice, data.currentLanguage) : '-'}
 							</dd>
 						</div>
 					</dl>

@@ -2,22 +2,16 @@ import type { TypedMoney } from '@commercetools/platform-sdk';
 import { CurrencyValue } from './CurrencyValue';
 import CurrencyValueType from './types/CurrencyValueType';
 
-export function formatCurrency(money: TypedMoney, currentLanguage: string) {
-	const currencyValue = new CurrencyValue(
+export function formatMoney(money: TypedMoney, currentLanguage: string) {
+	return formatCurrencyMinorUnits(
 		money.centAmount,
 		money.fractionDigits,
-		CurrencyValueType.MinorUnits
+		money.currencyCode,
+		currentLanguage
 	);
-
-	const formattedValue = new Intl.NumberFormat(currentLanguage, {
-		minimumFractionDigits: money.fractionDigits,
-		maximumFractionDigits: money.fractionDigits
-	}).format(currencyValue.toCurrencyUnits());
-
-	return `${formattedValue} ${money.currencyCode}`;
 }
 
-export function formatFractionalDigits(
+export function formatCurrencyMinorUnits(
 	centAmount: number,
 	fractionDigits: number,
 	currencyCode: string,

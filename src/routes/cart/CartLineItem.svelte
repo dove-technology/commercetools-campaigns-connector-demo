@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { formatFractionalDigits } from '$lib/CurrencyDisplay';
+	import { formatCurrencyMinorUnits } from '$lib/CurrencyDisplay';
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart, LineItem } from '@commercetools/platform-sdk';
 	import { getLineItemSubtotal, getLineItemTotal } from '$lib/CartHelpers';
@@ -47,7 +47,7 @@
 				<p class="text-right text-sm font-medium text-gray-900">
 					{#if subTotal !== total}
 						<span class="line-through">
-							{formatFractionalDigits(
+							{formatCurrencyMinorUnits(
 								subTotal,
 								cart.totalPrice.fractionDigits,
 								cart.totalPrice.currencyCode,
@@ -55,7 +55,7 @@
 							)}
 						</span>
 					{/if}
-					{formatFractionalDigits(
+					{formatCurrencyMinorUnits(
 						total,
 						cart.totalPrice.fractionDigits,
 						cart.totalPrice.currencyCode,

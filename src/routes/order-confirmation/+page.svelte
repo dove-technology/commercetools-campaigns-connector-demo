@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formatCurrency } from '$lib/CurrencyDisplay.js';
+	import { formatMoney } from '$lib/CurrencyDisplay.js';
 
 	let { data } = $props();
 </script>
@@ -35,7 +35,7 @@
 							<div class="flex pl-4 sm:pl-6">
 								<dt class="font-medium text-gray-900">Price</dt>
 								<dd class="ml-2 text-gray-700">
-									{formatCurrency(lineItem.price.value, data.currentLanguage)}
+									{formatMoney(lineItem.price.value, data.currentLanguage)}
 								</dd>
 							</div>
 						</dl>
