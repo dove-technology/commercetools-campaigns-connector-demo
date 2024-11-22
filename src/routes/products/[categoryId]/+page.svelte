@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { data } = $props();
 	import { page } from '$app/stores';
-	import { formatCurrency } from '$lib/CurrencyDisplay';
+	import ProductPrice from '$lib/ProductPrice.svelte';
 </script>
 
 {#key $page.params.categoryId}
@@ -20,9 +20,9 @@
 					/>
 					<h3 class="mt-4 text-sm text-gray-700">{product.name[data.currentLanguage]}</h3>
 					<p class="mt-1 text-lg font-medium text-gray-900">
-						{product.masterVariant.price
-							? formatCurrency(product.masterVariant.price.value, data.currentLanguage)
-							: ''}
+						{#if product.masterVariant.price}
+							<ProductPrice price={product.masterVariant.price} />
+						{/if}
 					</p>
 				</a>
 			{/each}

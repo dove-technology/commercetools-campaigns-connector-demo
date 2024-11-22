@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { formatCurrency } from '$lib/CurrencyDisplay';
 	import { enhance } from '$app/forms';
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart } from '@commercetools/platform-sdk';
+	import ProductPrice from '$lib/ProductPrice.svelte';
 
 	let { data, form } = $props();
 
@@ -16,9 +16,9 @@
 			<div class="flex justify-between">
 				<h1 class="text-xl font-medium text-gray-900">{data.product.name[data.currentLanguage]}</h1>
 				<p class="text-xl font-medium text-gray-900">
-					{data.product.masterVariant.price
-						? formatCurrency(data.product.masterVariant.price.value, data.currentLanguage)
-						: ''}
+					{#if data.product.masterVariant.price}
+						<ProductPrice price={data.product.masterVariant.price} />
+					{/if}
 				</p>
 			</div>
 		</div>

@@ -1,0 +1,225 @@
+{
+	"type": "Cart",
+	"id": "9273a1d3-d137-450a-8d8f-196c6e86c032",
+	"version": 12,
+	"versionModifiedAt": "2024-11-22T15:26:29.549Z",
+	"lastMessageSequenceNumber": 1,
+	"createdAt": "2024-11-22T15:25:01.866Z",
+	"lastModifiedAt": "2024-11-22T15:26:29.549Z",
+	"lastModifiedBy": {
+		"clientId": "OROGSNAOBwHXXmqZVibihq_X",
+		"isPlatformClient": false
+	},
+	"createdBy": {
+		"clientId": "OROGSNAOBwHXXmqZVibihq_X",
+		"isPlatformClient": false
+	},
+	"lineItems": [
+		{
+			"id": "b9bec7cb-6e78-4d8e-9044-284b77ac9342",
+			"productId": "2fe035e0-8a6f-4ed8-9458-e3ff2c413c1c",
+			"productKey": "rumi-chair",
+			"name": {
+				"en-US": "Rumi Chair",
+				"en-GB": "Rumi Chair",
+				"de-DE": "Stuhl >Rumi<"
+			},
+			"productType": {
+				"typeId": "product-type",
+				"id": "e04b1724-013c-4d6c-8f53-7a8807fdbe3a",
+				"version": 1
+			},
+			"productSlug": {
+				"en-US": "rumi-chair",
+				"en-GB": "rumi-chair",
+				"de-DE": "rumi-stuhl"
+			},
+			"variant": {
+				"id": 1,
+				"sku": "RAM-094",
+				"prices": [
+					{
+						"id": "1c4e18e0-efc8-4584-a5cc-62e0891d09f2",
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "EUR",
+							"centAmount": 12999,
+							"fractionDigits": 2
+						},
+						"country": "DE",
+						"discounted": {
+							"value": {
+								"type": "centPrecision",
+								"currencyCode": "EUR",
+								"centAmount": 11049,
+								"fractionDigits": 2
+							},
+							"discount": {
+								"typeId": "product-discount",
+								"id": "aa5f70ba-9dc6-4346-bac4-0a757dc91aba"
+							}
+						}
+					},
+					{
+						"id": "80063f9b-bbea-4801-a728-09f70237ff0a",
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "GBP",
+							"centAmount": 12999,
+							"fractionDigits": 2
+						},
+						"country": "GB",
+						"discounted": {
+							"value": {
+								"type": "centPrecision",
+								"currencyCode": "GBP",
+								"centAmount": 11049,
+								"fractionDigits": 2
+							},
+							"discount": {
+								"typeId": "product-discount",
+								"id": "aa5f70ba-9dc6-4346-bac4-0a757dc91aba"
+							}
+						}
+					},
+					{
+						"id": "27a24657-9ee2-40d7-9f25-d0bf21f0a23f",
+						"value": {
+							"type": "centPrecision",
+							"currencyCode": "USD",
+							"centAmount": 15000,
+							"fractionDigits": 2
+						},
+						"country": "US",
+						"discounted": {
+							"value": {
+								"type": "centPrecision",
+								"currencyCode": "USD",
+								"centAmount": 12750,
+								"fractionDigits": 2
+							},
+							"discount": {
+								"typeId": "product-discount",
+								"id": "aa5f70ba-9dc6-4346-bac4-0a757dc91aba"
+							}
+						}
+					}
+				],
+				"images": [
+					{
+						"url": "https://storage.googleapis.com/merchant-center-europe/sample-data/b2c-lifestyle/Rumi_Chair-1.1.jpeg",
+						"dimensions": {
+							"w": 2400,
+							"h": 3200
+						}
+					}
+				],
+				"attributes": [
+					{
+						"name": "productspec",
+						"value": {
+							"en-GB": "- Dry clean only",
+							"en-US": "- Dry clean only",
+							"de-DE": "- Nur chemische Reinigung"
+						}
+					},
+					{
+						"name": "color",
+						"value": {
+							"en-GB": "Lavender Blush:#fff0f5",
+							"de-DE": "Lavendel:#fff0f5",
+							"en-US": "Lavender Blush:#fff0f5"
+						}
+					},
+					{
+						"name": "finish",
+						"value": {
+							"en-GB": "Gold:#FFD700",
+							"en-US": "Gold:#FFD700",
+							"de-DE": "Gold:#FFD700"
+						}
+					}
+				],
+				"assets": []
+			},
+			"price": {
+				"id": "1c4e18e0-efc8-4584-a5cc-62e0891d09f2",
+				"value": {
+					"type": "centPrecision",
+					"currencyCode": "EUR",
+					"centAmount": 12999,
+					"fractionDigits": 2
+				},
+				"country": "DE",
+				"discounted": {
+					"value": {
+						"type": "centPrecision",
+						"currencyCode": "EUR",
+						"centAmount": 11049,
+						"fractionDigits": 2
+					},
+					"discount": {
+						"typeId": "product-discount",
+						"id": "aa5f70ba-9dc6-4346-bac4-0a757dc91aba"
+					}
+				}
+			},
+			"quantity": 1,
+			"discountedPricePerQuantity": [],
+			"perMethodTaxRate": [],
+			"addedAt": "2024-11-22T15:25:01.951Z",
+			"lastModifiedAt": "2024-11-22T15:25:01.951Z",
+			"state": [
+				{
+					"quantity": 1,
+					"state": {
+						"typeId": "state",
+						"id": "fce0e3a1-1ac3-47e4-b936-89d1a53c9905"
+					}
+				}
+			],
+			"priceMode": "Platform",
+			"lineItemMode": "Standard",
+			"totalPrice": {
+				"type": "centPrecision",
+				"currencyCode": "EUR",
+				"centAmount": 11049,
+				"fractionDigits": 2
+			},
+			"taxedPricePortions": []
+		}
+	],
+	"cartState": "Active",
+	"totalPrice": {
+		"type": "centPrecision",
+		"currencyCode": "EUR",
+		"centAmount": 11049,
+		"fractionDigits": 2
+	},
+	"country": "DE",
+	"shippingMode": "Single",
+	"shipping": [],
+	"customLineItems": [],
+	"discountCodes": [],
+	"directDiscounts": [],
+	"custom": {
+		"type": {
+			"typeId": "type",
+			"id": "51cc98cc-4b3f-4d8b-8320-ec53836c3f88"
+		},
+		"fields": {
+			"dovetech-discounts-couponCodes": "[]",
+			"dovetech-discounts-evaluationResponse": "{\"actions\":[],\"basket\":{\"total\":110.49,\"totalAmountOff\":0,\"items\":[{\"total\":110.49,\"totalAmountOff\":0,\"actions\":[]}]},\"aggregates\":{\"total\":110.49,\"totalAmountOff\":0},\"costs\":[],\"commitId\":null,\"evaluationLog\":null}",
+			"dovetech-discounts-evaluationCurrency": "EUR"
+		}
+	},
+	"inventoryMode": "None",
+	"taxMode": "Platform",
+	"taxRoundingMode": "HalfEven",
+	"taxCalculationMode": "LineItemLevel",
+	"deleteDaysAfterLastModification": 90,
+	"refusedGifts": [],
+	"origin": "Customer",
+	"itemShippingAddresses": [],
+	"totalLineItemQuantity": 1
+}
