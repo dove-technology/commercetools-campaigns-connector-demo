@@ -7,7 +7,7 @@ import {
 } from './CartHelpers';
 import type { Cart } from '@commercetools/platform-sdk';
 import * as cartWithProductDiscount from './test-carts/cart-with-product-discount.json';
-import * as cartWithLineItemDiscounts from './test-carts/cart-with-line-item-discounts.json';
+import * as cartWithPricePerQuantityDiscounts from './test-carts/cart-with-price-per-quantity-discounts.json';
 import * as cartWithNoDiscounts from './test-carts/cart-with-no-discounts.json';
 
 it('line item subtotal should take into account quantity', () => {
@@ -38,7 +38,7 @@ it('line item total should return total', () => {
 });
 
 it('line item total should take into account price per quantity', () => {
-	const cart = cartWithLineItemDiscounts as Cart;
+	const cart = cartWithPricePerQuantityDiscounts as Cart;
 
 	const lineItem = cart.lineItems[0];
 	const total = getLineItemTotal(lineItem);
@@ -55,7 +55,7 @@ it('get cart discount amount should return 0 when no discounts', () => {
 });
 
 it('get cart discount amount should return amount when cart has discounts', () => {
-	const cart = cartWithLineItemDiscounts as Cart;
+	const cart = cartWithPricePerQuantityDiscounts as Cart;
 
 	const discountAmount = getCartDiscountAmount(cart);
 
@@ -63,7 +63,7 @@ it('get cart discount amount should return amount when cart has discounts', () =
 });
 
 it('get cart subtotal should not include discount amount', () => {
-	const cart = cartWithLineItemDiscounts as Cart;
+	const cart = cartWithPricePerQuantityDiscounts as Cart;
 
 	const subtotal = getCartSubtotal(cart);
 
