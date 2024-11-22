@@ -44,17 +44,7 @@ export const getLineItemSubtotal = (lineItem: LineItem) => {
 };
 
 export const getLineItemTotal = (lineItem: LineItem) => {
-	if (lineItem.discountedPricePerQuantity.length > 0) {
-		return lineItem.discountedPricePerQuantity.reduce((acc, discountedLineItemPriceForQuantity) => {
-			const lineItemPriceForQuantity =
-				discountedLineItemPriceForQuantity.quantity *
-				discountedLineItemPriceForQuantity.discountedPrice.value.centAmount;
-
-			return acc + lineItemPriceForQuantity;
-		}, 0);
-	} else {
-		return lineItem.totalPrice.centAmount;
-	}
+	return lineItem.totalPrice.centAmount;
 };
 
 const getLineItemPrice = (lineItem: LineItem) => {
