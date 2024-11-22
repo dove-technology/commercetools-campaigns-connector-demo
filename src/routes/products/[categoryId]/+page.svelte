@@ -5,7 +5,7 @@
 	import { getImageUrl } from '$lib/ProductHelpers';
 </script>
 
-{#key $page.params.categoryId}
+{#key `${$page.params.categoryId}-${data.page}`}
 	<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 		<h2 class="sr-only">Products</h2>
 
@@ -28,5 +28,30 @@
 				</a>
 			{/each}
 		</div>
+
+		<nav
+			aria-label="Pagination"
+			class="mx-auto mt-6 flex max-w-7xl justify-between px-4 text-sm font-medium text-gray-700 sm:px-6 lg:px-8"
+		>
+			<div class="min-w-0 flex-1">
+				{#if data.page > 1}
+					<a
+						href={`/products/${$page.params.categoryId}` +
+							`${data.page > 2 ? `?page=${data.page - 1}` : ''}`}
+						class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/25 focus:ring-offset-1 focus:ring-offset-indigo-600"
+						>Previous</a
+					>
+				{/if}
+			</div>
+			{#if data.totalPages && data.page < data.totalPages}
+				<div class="flex min-w-0 flex-1 justify-end">
+					<a
+						href={'/products/' + $page.params.categoryId + `?page=${data.page + 1}`}
+						class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/25 focus:ring-offset-1 focus:ring-offset-indigo-600"
+						>Next</a
+					>
+				</div>
+			{/if}
+		</nav>
 	</div>
 {/key}
