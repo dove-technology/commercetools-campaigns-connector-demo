@@ -5,12 +5,9 @@
 	import type { Cart, LineItem } from '@commercetools/platform-sdk';
 	import { getLineItemTotals } from '$lib/CartHelpers';
 	import ProductPrice from '$lib/ProductPrice.svelte';
+	import { page } from '$app/stores';
 
-	let {
-		lineItem,
-		cart,
-		currentLanguage
-	}: { lineItem: LineItem; cart: Cart; currentLanguage: string } = $props();
+	let { lineItem, cart }: { lineItem: LineItem; cart: Cart } = $props();
 
 	const lineItemTotals = $derived(getLineItemTotals(lineItem));
 </script>
@@ -38,7 +35,7 @@
 							href={`/product/${lineItem.productId}`}
 							class="font-medium text-gray-700 hover:text-gray-800"
 						>
-							{lineItem.name[currentLanguage]}
+							{lineItem.name[$page.data.currentLanguage]}
 						</a>
 					</h3>
 					<p class="mt-1 text-sm text-gray-500">
@@ -52,14 +49,14 @@
 							lineItemTotals.subTotal,
 							cart.totalPrice.fractionDigits,
 							cart.totalPrice.currencyCode,
-							currentLanguage
+							$page.data.currentLanguage
 						)}
 					</span>
 					{formatFractionalDigits(
 						lineItemTotals.total,
 						cart.totalPrice.fractionDigits,
 						cart.totalPrice.currencyCode,
-						currentLanguage
+						$page.data.currentLanguage
 					)}
 				</p>
 			</div>

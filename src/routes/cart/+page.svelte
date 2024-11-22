@@ -37,7 +37,7 @@
 				<h2 class="sr-only">Items in your shopping cart</h2>
 				<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
 					{#each cart.lineItems as lineItem (lineItem.id)}
-						<CartLineItem {lineItem} {cart} currentLanguage={data.currentLanguage} />
+						<CartLineItem {lineItem} {cart} />
 					{/each}
 				</ul>
 			</section>
