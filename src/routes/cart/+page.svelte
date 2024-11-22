@@ -6,7 +6,7 @@
 	import AddCouponCode from './AddCouponCode.svelte';
 	import CartCouponCodes from './CartCouponCodes.svelte';
 	import type { Cart } from '@commercetools/platform-sdk';
-	import { getCartSubtotal, getCartDiscountAmount } from '$lib/CartHelpers';
+	import { getCartSubtotal, getCartDiscountAmount, getLineItemTotals } from '$lib/CartHelpers';
 
 	let { data, form } = $props();
 
@@ -35,7 +35,7 @@
 		</p>
 		<div class="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
 			<section aria-labelledby="cart-heading" class="lg:col-span-7">
-				<h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
+				<h2 class="sr-only">Items in your shopping cart</h2>
 				<ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
 					{#each cart.lineItems as lineItem (lineItem.id)}
 						<li class="flex py-6 sm:py-10">
@@ -47,15 +47,15 @@
 									<img
 										src={lineItem.variant?.images![0]?.url}
 										alt={lineItem.key}
-										class="size-24 rounded-md object-cover object-center sm:size-48"
+										class="size-24 rounded-lg object-cover sm:size-32"
 									/>
 								</a>
 							</div>
 
-							<div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-								<div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-									<div>
-										<div class="flex justify-between">
+							<div class="relative ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+								<div>
+									<div class="flex justify-between sm:grid sm:grid-cols-2">
+										<div class="pr-6">
 											<h3 class="text-sm">
 												<a
 													href={`/product/${lineItem.productId}`}
@@ -63,14 +63,32 @@
 													>{lineItem.name[data.currentLanguage]}</a
 												>
 											</h3>
+											<p class="mt-1 text-sm text-gray-500">
+												{formatCurrency(lineItem.price.value, data.currentLanguage)}
+											</p>
 										</div>
 
-										<p class="mt-1 text-sm font-medium text-gray-900">
-											{formatCurrency(lineItem.price.value, data.currentLanguage)}
+										<p class="text-right text-sm font-medium text-gray-900">
+											<span class="line-through">
+												{formatFractionalDigits(
+													getLineItemTotals(lineItem).subTotal,
+													cart.totalPrice.fractionDigits,
+													cart.totalPrice.currencyCode,
+													data.currentLanguage
+												)}
+											</span>
+											{formatFractionalDigits(
+												getLineItemTotals(lineItem).total,
+												cart.totalPrice.fractionDigits,
+												cart.totalPrice.currencyCode,
+												data.currentLanguage
+											)}
 										</p>
 									</div>
 
-									<div class="mt-4 sm:mt-0 sm:pr-9">
+									<div
+										class="mt-4 flex items-center sm:absolute sm:left-1/2 sm:top-0 sm:mt-0 sm:block"
+									>
 										<form
 											method="POST"
 											action="?/updateItemQuantity"
@@ -84,14 +102,14 @@
 												};
 											}}
 										>
+											<input type="hidden" name="line-item-id" value={lineItem.id} />
 											<label for="quantity-{lineItem.id}" class="sr-only"
 												>Quantity, {lineItem.key}</label
 											>
-											<input type="hidden" name="line-item-id" value={lineItem.id} />
 											<select
 												id="quantity-{lineItem.id}"
 												name="quantity"
-												class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+												class="block max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base/5 font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
 												onchange={(event) => {
 													const select = event.target as HTMLSelectElement;
 													select.form?.requestSubmit();
@@ -106,40 +124,27 @@
 											<button class="sr-only" type="submit">Update</button>
 										</form>
 
-										<div class="absolute right-0 top-0">
-											<form
-												method="POST"
-												action="?/removeLineItem"
-												use:enhance={() => {
-													return async ({ update, result }) => {
-														if (result.type === 'success' && result.data?.cart) {
-															setCart(result.data.cart as Cart);
-														}
+										<form
+											method="POST"
+											action="?/removeLineItem"
+											use:enhance={() => {
+												return async ({ update, result }) => {
+													if (result.type === 'success' && result.data?.cart) {
+														setCart(result.data.cart as Cart);
+													}
 
-														await update();
-													};
-												}}
+													await update();
+												};
+											}}
+										>
+											<input type="hidden" name="line-item-id" value={lineItem.id} />
+											<button
+												type="submit"
+												class="ml-4 text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:ml-0 sm:mt-3"
 											>
-												<input type="hidden" name="line-item-id" value={lineItem.id} />
-												<button
-													type="submit"
-													class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-												>
-													<span class="sr-only">Remove</span>
-													<svg
-														class="size-5"
-														viewBox="0 0 20 20"
-														fill="currentColor"
-														aria-hidden="true"
-														data-slot="icon"
-													>
-														<path
-															d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
-														/>
-													</svg>
-												</button>
-											</form>
-										</div>
+												<span>Remove</span>
+											</button>
+										</form>
 									</div>
 								</div>
 							</div>

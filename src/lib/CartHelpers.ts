@@ -36,7 +36,7 @@ export const getCartDiscountAmount = (cart: Cart | undefined): number => {
 	}, 0);
 };
 
-const getLineItemTotals = (lineItem: LineItem) => {
+export const getLineItemTotals = (lineItem: LineItem) => {
 	return {
 		subTotal: getLineItemPrice(lineItem) * lineItem.quantity,
 		total: getLineItemTotal(lineItem)
