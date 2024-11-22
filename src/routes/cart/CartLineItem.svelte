@@ -3,13 +3,14 @@
 	import { formatFractionalDigits } from '$lib/CurrencyDisplay';
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart, LineItem } from '@commercetools/platform-sdk';
-	import { getLineItemTotals } from '$lib/CartHelpers';
+	import { getLineItemSubtotal, getLineItemTotal } from '$lib/CartHelpers';
 	import ProductPrice from '$lib/ProductPrice.svelte';
 	import { page } from '$app/stores';
 
 	let { lineItem, cart }: { lineItem: LineItem; cart: Cart } = $props();
 
-	const lineItemTotals = $derived(getLineItemTotals(lineItem));
+	const subTotal = $derived(getLineItemSubtotal(lineItem));
+	const total = $derived(getLineItemTotal(lineItem));
 </script>
 
 <li class="flex py-6 sm:py-10">
@@ -46,14 +47,14 @@
 				<p class="text-right text-sm font-medium text-gray-900">
 					<span class="line-through">
 						{formatFractionalDigits(
-							lineItemTotals.subTotal,
+							subTotal,
 							cart.totalPrice.fractionDigits,
 							cart.totalPrice.currencyCode,
 							$page.data.currentLanguage
 						)}
 					</span>
 					{formatFractionalDigits(
-						lineItemTotals.total,
+						total,
 						cart.totalPrice.fractionDigits,
 						cart.totalPrice.currencyCode,
 						$page.data.currentLanguage

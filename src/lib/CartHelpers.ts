@@ -17,7 +17,7 @@ export const getCartSubtotal = (cart: Cart | undefined): number => {
 	}
 
 	return cart.lineItems.reduce((acc, lineItem) => {
-		return acc + getLineItemPrice(lineItem) * lineItem.quantity;
+		return acc + getLineItemSubtotal(lineItem);
 	}, 0);
 };
 
@@ -27,30 +27,20 @@ export const getCartDiscountAmount = (cart: Cart | undefined): number => {
 	}
 
 	return cart.lineItems.reduce((acc, lineItem) => {
-		const lineItemPrice = getLineItemPrice(lineItem) * lineItem.quantity;
-		const lineItemTotalPrice = getLineItemTotal(lineItem);
+		const lineItemSubtotal = getLineItemSubtotal(lineItem);
+		const lineItemTotal = getLineItemTotal(lineItem);
 
-		const discountAmount = lineItemPrice - lineItemTotalPrice;
+		const discountAmount = lineItemSubtotal - lineItemTotal;
 
 		return acc + discountAmount;
 	}, 0);
 };
 
-export const getLineItemTotals = (lineItem: LineItem) => {
-	return {
-		subTotal: getLineItemPrice(lineItem) * lineItem.quantity,
-		total: getLineItemTotal(lineItem)
-	};
+export const getLineItemSubtotal = (lineItem: LineItem) => {
+	return getLineItemPrice(lineItem) * lineItem.quantity;
 };
 
-const getLineItemPrice = (lineItem: LineItem) => {
-	if (lineItem.price.discounted) {
-		return lineItem.price.discounted.value.centAmount;
-	}
-
-	return lineItem.price.value.centAmount;
-};
-function getLineItemTotal(lineItem: LineItem) {
+export const getLineItemTotal = (lineItem: LineItem) => {
 	if (lineItem.discountedPricePerQuantity.length > 0) {
 		return lineItem.discountedPricePerQuantity.reduce((acc, discountedLineItemPriceForQuantity) => {
 			const lineItemPriceForQuantity =
@@ -62,4 +52,12 @@ function getLineItemTotal(lineItem: LineItem) {
 	} else {
 		return lineItem.totalPrice.centAmount;
 	}
-}
+};
+
+const getLineItemPrice = (lineItem: LineItem) => {
+	if (lineItem.price.discounted) {
+		return lineItem.price.discounted.value.centAmount;
+	}
+
+	return lineItem.price.value.centAmount;
+};
