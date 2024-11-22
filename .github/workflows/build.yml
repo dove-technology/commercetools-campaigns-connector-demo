@@ -18,3 +18,5 @@ jobs:
         run: yarn svelte-check
       - name: Lint
         run: yarn lint
+      - name: Unit Test
+        run: yarn test:unit
