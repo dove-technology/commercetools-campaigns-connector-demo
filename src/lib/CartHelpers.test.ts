@@ -20,9 +20,9 @@ it('line item subtotal should take into account quantity', () => {
 });
 
 it('line item subtotal should take into account product discounts', () => {
-	const ctCart = cartWithProductDiscount as Cart;
+	const cart = cartWithProductDiscount as Cart;
 
-	const lineItem = ctCart.lineItems[0];
+	const lineItem = cart.lineItems[0];
 	const subtotal = getLineItemSubtotal(lineItem);
 
 	expect(subtotal).toBe(11049);
@@ -68,4 +68,12 @@ it('get cart subtotal should not include discount amount', () => {
 	const subtotal = getCartSubtotal(cart);
 
 	expect(subtotal).toBe(897);
+});
+
+it('get cart subtotal should take into account product discounts', () => {
+	const cart = cartWithProductDiscount as Cart;
+
+	const subtotal = getCartSubtotal(cart);
+
+	expect(subtotal).toBe(11049);
 });
