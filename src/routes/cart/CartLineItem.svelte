@@ -4,6 +4,7 @@
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart, LineItem } from '@commercetools/platform-sdk';
 	import { getLineItemTotals } from '$lib/CartHelpers';
+	import ProductPrice from './ProductPrice.svelte';
 
 	let {
 		lineItem,
@@ -41,7 +42,7 @@
 						</a>
 					</h3>
 					<p class="mt-1 text-sm text-gray-500">
-						{formatCurrency(lineItem.price.value, currentLanguage)}
+						<ProductPrice price={lineItem.price} />
 					</p>
 				</div>
 
