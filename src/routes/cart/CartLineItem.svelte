@@ -4,7 +4,7 @@
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart, LineItem } from '@commercetools/platform-sdk';
 	import { getLineItemTotals } from '$lib/CartHelpers';
-	import ProductPrice from './ProductPrice.svelte';
+	import ProductPrice from '$lib/ProductPrice.svelte';
 
 	let {
 		lineItem,
