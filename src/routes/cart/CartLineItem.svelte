@@ -6,6 +6,7 @@
 	import { getLineItemSubtotal, getLineItemTotal } from '$lib/CartHelpers';
 	import ProductPrice from '$lib/ProductPrice.svelte';
 	import { page } from '$app/stores';
+	import { getImageUrl } from '$lib/ProductHelpers';
 
 	let { lineItem, cart }: { lineItem: LineItem; cart: Cart } = $props();
 
@@ -20,7 +21,7 @@
 			class="font-medium text-gray-700 hover:text-gray-800"
 		>
 			<img
-				src={lineItem.variant?.images![0]?.url}
+				src={getImageUrl(lineItem.variant?.images)}
 				alt={lineItem.key}
 				class="size-24 rounded-lg object-cover sm:size-32"
 			/>

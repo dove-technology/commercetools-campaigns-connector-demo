@@ -2,6 +2,7 @@
 	let { data } = $props();
 	import { page } from '$app/stores';
 	import ProductPrice from '$lib/ProductPrice.svelte';
+	import { getImageUrl } from '$lib/ProductHelpers';
 </script>
 
 {#key $page.params.categoryId}
@@ -14,7 +15,7 @@
 			{#each data.products as product}
 				<a href={`/product/${product.id}`} class="group">
 					<img
-						src={product.masterVariant.images ? product.masterVariant.images[0].url : ''}
+						src={getImageUrl(product.masterVariant.images)}
 						alt={product.name[data.currentLanguage]}
 						class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]"
 					/>

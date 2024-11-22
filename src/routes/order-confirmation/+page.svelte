@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { formatMoney } from '$lib/CurrencyDisplay.js';
+	import { getImageUrl } from '$lib/ProductHelpers';
 
 	let { data } = $props();
 </script>
@@ -18,7 +19,7 @@
 		{#each data.order.lineItems as lineItem}
 			<div class="flex space-x-6 border-b border-gray-200 py-10">
 				<img
-					src={lineItem.variant?.images![0]?.url}
+					src={getImageUrl(lineItem.variant?.images)}
 					alt={lineItem.name[data.currentLanguage]}
 					class="size-20 flex-none rounded-lg bg-gray-100 object-cover sm:size-40"
 				/>

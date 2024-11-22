@@ -3,6 +3,7 @@
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart } from '@commercetools/platform-sdk';
 	import ProductPrice from '$lib/ProductPrice.svelte';
+	import { getImageUrl } from '$lib/ProductHelpers';
 
 	let { data, form } = $props();
 
@@ -29,7 +30,7 @@
 
 			<div class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
 				<img
-					src={data.product.masterVariant.images ? data.product.masterVariant.images[0].url : ''}
+					src={getImageUrl(data.product.masterVariant.images)}
 					alt="Back of women&#039;s Basic Tee in black."
 					class="rounded-lg lg:col-span-2 lg:row-span-2"
 				/>
