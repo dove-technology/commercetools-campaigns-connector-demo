@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { formatCurrency, formatFractionalDigits } from '$lib/CurrencyDisplay';
+	import { formatFractionalDigits } from '$lib/CurrencyDisplay';
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart, LineItem } from '@commercetools/platform-sdk';
 	import { getLineItemTotals } from '$lib/CartHelpers';
