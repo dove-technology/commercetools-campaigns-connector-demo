@@ -36,7 +36,7 @@
 							<div class="flex pl-4 sm:pl-6">
 								<dt class="font-medium text-gray-900">Price</dt>
 								<dd class="ml-2 text-gray-700">
-									{formatMoney(lineItem.price.value, data.currentLanguage)}
+									{formatMoney(lineItem.totalPrice, data.currentLanguage)}
 								</dd>
 							</div>
 						</dl>
