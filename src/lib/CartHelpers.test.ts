@@ -1,5 +1,5 @@
 import { it, expect } from 'vitest';
-import { getLineItemSubtotal, getLineItemTotal } from './CartHelpers';
+import { getCartDiscountAmount, getLineItemSubtotal, getLineItemTotal } from './CartHelpers';
 import type { Cart } from '@commercetools/platform-sdk';
 import * as cartWithProductDiscount from './test-carts/cart-with-product-discount.json';
 import * as cartWithLineItemDiscounts from './test-carts/cart-with-line-item-discounts.json';
@@ -39,4 +39,20 @@ it('line item total should take into account price per quantity', () => {
 	const total = getLineItemTotal(lineItem);
 
 	expect(total).toBe(598);
+});
+
+it('get cart discount amount should return 0 when no discounts', () => {
+	const cart = cartWithNoDiscounts as Cart;
+
+	const discountAmount = getCartDiscountAmount(cart);
+
+	expect(discountAmount).toBe(0);
+});
+
+it('get cart discount amount should return amount when cart has discounts', () => {
+	const cart = cartWithLineItemDiscounts as Cart;
+
+	const discountAmount = getCartDiscountAmount(cart);
+
+	expect(discountAmount).toBe(299);
 });
