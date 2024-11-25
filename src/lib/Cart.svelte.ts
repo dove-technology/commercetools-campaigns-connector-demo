@@ -8,6 +8,10 @@ export const getCart = () => {
 	return state.cart;
 };
 
+export const getState = () => {
+	return state;
+};
+
 export const setCart = (cart: Cart | undefined) => {
 	state.cart = cart;
 };
