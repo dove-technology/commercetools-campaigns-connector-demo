@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { enhance, applyAction } from '$app/forms';
 	import { setCart } from '$lib/Cart.svelte.js';
 	import type { Cart } from '@commercetools/platform-sdk';
 	import ProductPrice from '$lib/ProductPrice.svelte';
@@ -44,12 +44,12 @@
 				use:enhance={() => {
 					addingToCart = true;
 
-					return async ({ update, result }) => {
+					return async ({ result }) => {
 						if (result.type === 'success' && result.data?.cart) {
 							setCart(result.data.cart as Cart);
 						}
 
-						await update();
+						await applyAction(result);
 						addingToCart = false;
 					};
 				}}
