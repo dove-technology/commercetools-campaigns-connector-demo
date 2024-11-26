@@ -26,8 +26,8 @@
 				<dd class="text-sm font-medium text-gray-900">
 					{formatCurrencyMinorUnits(
 						cartSubtotal,
-						cart.totalPrice.fractionDigits,
-						cart.totalPrice.currencyCode,
+						$page.data.cartCurrencyFractionDigits,
+						$page.data.cartCurrencyCode,
 						$page.data.currentLanguage
 					)}
 				</dd>
@@ -39,8 +39,8 @@
 					<dd class="text-sm font-medium">
 						-{formatCurrencyMinorUnits(
 							cartDiscountAmount,
-							cart.totalPrice.fractionDigits,
-							cart.totalPrice.currencyCode,
+							$page.data.cartCurrencyFractionDigits,
+							$page.data.cartCurrencyCode,
 							$page.data.currentLanguage
 						)}
 					</dd>

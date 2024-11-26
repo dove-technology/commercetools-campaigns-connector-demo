@@ -19,8 +19,15 @@ export const load: PageServerLoad = async ({ cookies }: RequestEvent) => {
 		};
 	}
 
+	const cart = await getCart(cartId);
+
+	const cartCurrencyFractionDigits = cart?.totalPrice.fractionDigits;
+	const cartCurrencyCode = cart?.totalPrice.currencyCode;
+
 	return {
-		cart: await getCart(cartId)
+		cart: cart,
+		cartCurrencyFractionDigits,
+		cartCurrencyCode
 	};
 };
 

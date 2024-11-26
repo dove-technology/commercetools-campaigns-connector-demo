@@ -50,16 +50,16 @@
 						<span class="line-through">
 							{formatCurrencyMinorUnits(
 								subTotal,
-								cart.totalPrice.fractionDigits,
-								cart.totalPrice.currencyCode,
+								$page.data.cartCurrencyFractionDigits,
+								$page.data.cartCurrencyCode,
 								$page.data.currentLanguage
 							)}
 						</span>
 					{/if}
 					{formatCurrencyMinorUnits(
 						total,
-						cart.totalPrice.fractionDigits,
-						cart.totalPrice.currencyCode,
+						$page.data.cartCurrencyFractionDigits,
+						$page.data.cartCurrencyCode,
 						$page.data.currentLanguage
 					)}
 				</p>
