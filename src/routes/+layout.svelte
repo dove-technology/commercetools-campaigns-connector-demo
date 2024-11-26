@@ -1,22 +1,30 @@
 <script lang="ts">
 	import '../app.css';
-	import { setCart, getCart } from '$lib/Cart.svelte';
+	import { setCart, getState } from '$lib/Cart.svelte';
 	import { onMount } from 'svelte';
 	import DoveTechWingLogo from '$lib/DoveTechWingLogo.svelte';
+	import { page } from '$app/stores';
 
 	let { data, children } = $props();
-	let count = $derived(getCart()?.lineItems.reduce((acc, item) => acc + item.quantity, 0));
-	let cartLoaded = $derived(getCart() !== undefined);
 
-	onMount(async () => {
-		if (count === undefined) {
+	let count = $derived(
+		getState().cart?.lineItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0
+	);
+	let cartLoaded = $state(false);
+
+	if ($page.route.id !== '/cart') {
+		onMount(async () => {
 			const response = await fetch('/api/cart');
 
 			if (response.ok) {
+				// TODO: change the way cart data is returned from the API?
 				setCart(await response.json());
+				cartLoaded = true;
 			}
-		}
-	});
+		});
+	} else {
+		cartLoaded = true;
+	}
 </script>
 
 <svelte:head>
