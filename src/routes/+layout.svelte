@@ -3,28 +3,25 @@
 	import { setCart, getState } from '$lib/Cart.svelte';
 	import { onMount } from 'svelte';
 	import DoveTechWingLogo from '$lib/DoveTechWingLogo.svelte';
-	import { page } from '$app/stores';
 
 	let { data, children } = $props();
 
-	let count = $derived(
-		getState().cart?.lineItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0
-	);
-	let cartLoaded = $state(false);
+	const cartState = getState();
 
-	if ($page.route.id !== '/cart') {
-		onMount(async () => {
+	let count = $derived(
+		cartState.cart?.lineItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0
+	);
+
+	onMount(async () => {
+		if (!cartState.cartSet) {
 			const response = await fetch('/api/cart');
 
 			if (response.ok) {
 				// TODO: change the way cart data is returned from the API?
 				setCart(await response.json());
-				cartLoaded = true;
 			}
-		});
-	} else {
-		cartLoaded = true;
-	}
+		}
+	});
 </script>
 
 <svelte:head>
@@ -98,7 +95,7 @@
 									/>
 								</svg>
 								<span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-									>{cartLoaded ? count : '-'}</span
+									>{cartState.cartSet ? count : '-'}</span
 								>
 								<span class="sr-only">items in cart, view bag</span>
 							</a>
