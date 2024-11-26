@@ -1,13 +1,11 @@
 # Dovetech commercetools Connector Demo
 
-This site provides an example of how to use commercetools with the Dovetech connector.
-
-See the [Dovetech Campaigns Connector](https://github.com/dove-technology/commercetools-campaigns-connector) for details on the connector.
+This site provides an example of how to use commercetools with the [Dovetech Campaigns Connector](https://github.com/dove-technology/commercetools-campaigns-connector).
 
 **Note. This is not an example of how to build an ecommerce site with commercetools. It
 provides an example of how to integrate commercetools and Dovetech using the Dovetech connector.**
 
-Below is an example of the cart page:
+Below is an example of the cart page from the demo:
 
 ![Example Cart Page](cart-page.png)
 
@@ -16,8 +14,8 @@ Below is an example of the cart page:
 1. Dovetech [account](https://dovetech.com/starter-sign-up) and Processor API Key
 2. commercetools composable commerce [account](https://commercetools.com/free-trial)
 3. The Dovetech connector installed in a commercetools project
-4. A commercetools API Client (use the Admin client template for this demo)
-5. If you want to see the commercetools [checkout](https://docs.commercetools.com/checkout/) running in the demo you will need this setup in your commercetools project. See Checkout section below.
+4. A commercetools API client (use the Admin client template for this demo)
+5. If you want to see the commercetools [checkout](https://docs.commercetools.com/checkout/) running in the demo you will need this setup in your commercetools project. See the [Checkout](#checkout) section below.
 6. Node and Yarn installed
 
 ## Running the Demo
