@@ -9,7 +9,7 @@ provides an example of how to integrate commercetools and Dovetech using the Dov
 
 Below is an example of the cart page:
 
-![Example Cart Page](https://github.com/user-attachments/assets/16826571-4eba-4731-8766-23f1fd1a3633)
+![Example Cart Page](cart-page.png)
 
 ## Prerequisites
 
