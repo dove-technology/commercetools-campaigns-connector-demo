@@ -5,6 +5,7 @@
 
 	let { data, form } = $props();
 
+	// set the cart in shared state so the mini-cart can use it
 	setCart(data.cart);
 
 	let cartState = getState();

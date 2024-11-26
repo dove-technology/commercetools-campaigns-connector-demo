@@ -13,6 +13,7 @@
 	);
 
 	onMount(async () => {
+		// if we're on a page that has already got the cart, don't fetch it again
 		if (!cartState.cartSet) {
 			const response = await fetch('/api/cart');
 
