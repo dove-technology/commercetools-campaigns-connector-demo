@@ -5,10 +5,6 @@ const state = $state({
 	cart: undefined as Cart | undefined
 });
 
-export const getCart = () => {
-	return state.cart;
-};
-
 export const getCartState = () => {
 	return state;
 };
