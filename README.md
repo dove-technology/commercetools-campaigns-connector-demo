@@ -43,6 +43,8 @@ Coupon codes are added to the cart using the `dovetech-discounts-cartAction` cus
 }
 ```
 
+When the cart is updated with a coupon code, commercetools calls the service in the Dovetech connector (using an API extension) to validate the coupon code.
+
 Valid coupon codes are added to the `dovetech-discounts-couponCodes` field.
 
 If a coupon code isn't valid an error with status 400 is returned and the coupon code is not added to the cart.
