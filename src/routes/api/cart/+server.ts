@@ -5,10 +5,14 @@ export async function GET({ cookies }: RequestEvent) {
 	const cartId = cookies.get('cartId');
 
 	if (!cartId) {
-		return json(null);
+		return json({
+			cart: undefined
+		});
 	}
 
 	const cart = await getCart(cartId);
 
-	return json(cart);
+	return json({
+		cart
+	});
 }

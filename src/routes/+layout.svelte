@@ -18,8 +18,7 @@
 			const response = await fetch('/api/cart');
 
 			if (response.ok) {
-				// TODO: change the way cart data is returned from the API?
-				setCart(await response.json());
+				setCart((await response.json()).cart);
 			}
 		}
 	});
