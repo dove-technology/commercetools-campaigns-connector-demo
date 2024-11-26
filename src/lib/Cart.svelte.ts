@@ -9,7 +9,7 @@ export const getCart = () => {
 	return state.cart;
 };
 
-export const getState = () => {
+export const getCartState = () => {
 	return state;
 };
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { setCart, getState } from '$lib/Cart.svelte.js';
+	import { setCart, getCartState } from '$lib/Cart.svelte.js';
 	import CartLineItem from './CartLineItem.svelte';
 	import CartSummary from './CartSummary.svelte';
 
@@ -8,7 +8,7 @@
 	// set the cart in shared state so the mini-cart can use it
 	setCart(data.cart);
 
-	let cartState = getState();
+	let cartState = getCartState();
 </script>
 
 <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">

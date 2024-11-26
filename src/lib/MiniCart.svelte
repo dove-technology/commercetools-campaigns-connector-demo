@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { setCart, getState } from '$lib/Cart.svelte';
+	import { setCart, getCartState } from '$lib/Cart.svelte';
 	import { onMount } from 'svelte';
 
-	const cartState = getState();
+	const cartState = getCartState();
 
 	let count = $derived(
 		cartState.cart?.lineItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0
