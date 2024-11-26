@@ -2,27 +2,39 @@ import type { PageServerLoad, Actions } from './$types';
 import { createClient } from '$lib/CreateClient';
 import { getCurrency, getCountry } from '$lib/ProjectSettings.js';
 import { getCart, createCart, addLineItem } from '$lib/CartService';
-import { fail, type Cookies } from '@sveltejs/kit';
+import { fail, error, type Cookies } from '@sveltejs/kit';
 import type { ClientResponse } from '@commercetools/ts-client';
 import { getCustomer } from '$lib/CustomerService';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const productId = params.id;
 
-	const result = await createClient()
-		.productProjections()
-		.withId({ ID: productId })
-		.get({
-			queryArgs: {
-				priceCurrency: getCurrency(cookies),
-				priceCountry: getCountry(cookies)
-			}
-		})
-		.execute();
+	try {
+		const result = await createClient()
+			.productProjections()
+			.withId({ ID: productId })
+			.get({
+				queryArgs: {
+					priceCurrency: getCurrency(cookies),
+					priceCountry: getCountry(cookies)
+				}
+			})
+			.execute();
 
-	return {
-		product: result.body
-	};
+		return {
+			product: result.body
+		};
+	} catch (apiError) {
+		const errorResponse = apiError as ClientResponse;
+
+		if (errorResponse.statusCode === 404) {
+			error(404, {
+				message: 'Not found'
+			});
+		}
+
+		throw apiError;
+	}
 };
 
 export const actions: Actions = {

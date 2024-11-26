@@ -8,7 +8,7 @@
 	import { page } from '$app/stores';
 	import { getImageUrl } from '$lib/ProductHelpers';
 
-	let { lineItem, cart }: { lineItem: LineItem; cart: Cart } = $props();
+	let { lineItem }: { lineItem: LineItem } = $props();
 
 	const subTotal = $derived(getLineItemSubtotal(lineItem));
 	const total = $derived(getLineItemTotal(lineItem));
@@ -50,16 +50,16 @@
 						<span class="line-through">
 							{formatCurrencyMinorUnits(
 								subTotal,
-								cart.totalPrice.fractionDigits,
-								cart.totalPrice.currencyCode,
+								$page.data.cartCurrencyFractionDigits,
+								$page.data.cartCurrencyCode,
 								$page.data.currentLanguage
 							)}
 						</span>
 					{/if}
 					{formatCurrencyMinorUnits(
 						total,
-						cart.totalPrice.fractionDigits,
-						cart.totalPrice.currencyCode,
+						$page.data.cartCurrencyFractionDigits,
+						$page.data.cartCurrencyCode,
 						$page.data.currentLanguage
 					)}
 				</p>

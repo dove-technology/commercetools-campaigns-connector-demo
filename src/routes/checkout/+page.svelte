@@ -2,6 +2,7 @@
 	import { checkoutFlow } from '@commercetools/checkout-browser-sdk';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { setCart } from '$lib/Cart.svelte';
 
 	let { data } = $props();
 
@@ -17,6 +18,7 @@
 			onInfo: (message) => {
 				switch (message.code) {
 					case 'checkout_completed': {
+						setCart(undefined);
 						const id = (message.payload as { order: { id: string } }).order.id;
 						goto(`/order-confirmation?orderId=${id}`);
 						break;
