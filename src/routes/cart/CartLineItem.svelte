@@ -8,7 +8,7 @@
 	import { page } from '$app/stores';
 	import { getImageUrl } from '$lib/ProductHelpers';
 
-	let { lineItem, cart }: { lineItem: LineItem; cart: Cart } = $props();
+	let { lineItem }: { lineItem: LineItem } = $props();
 
 	const subTotal = $derived(getLineItemSubtotal(lineItem));
 	const total = $derived(getLineItemTotal(lineItem));
