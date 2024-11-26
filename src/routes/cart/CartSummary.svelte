@@ -12,7 +12,6 @@
 	let cartDiscountAmount = $derived(getCartDiscountAmount(cart));
 </script>
 
-<!-- Order summary -->
 <section
 	aria-labelledby="summary-heading"
 	class="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
