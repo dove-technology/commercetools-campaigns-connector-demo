@@ -61,5 +61,5 @@ This demo uses the "Complete Checkout" mode for the commercetools checkout. See 
 
 You need a checkout app installed in your commercetools project to use this. See [Configure Checkout](https://docs.commercetools.com/checkout/configuring-checkout) for more details.
 
-The "Allow buyers to add discount codes" setting in the checkout app should be left disabled because this will use the commercetools discount codes functionality.
+The "Allow buyers to add discount codes" setting in the checkout app should be left disabled otherwise the commercetools discount codes functionality would be used instead of Dovetech's.
 The cart page in the demo allows entering coupon codes, but the prebuilt "Complete Checkout" does not allow customising the coupon code functionality.
