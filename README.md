@@ -7,15 +7,20 @@ See the [Dovetech Campaigns Connector](https://github.com/dove-technology/commer
 **Note. This is not an example of how to build an ecommerce site with commercetools. It
 provides an example of how to integrate commercetools and Dovetech using the Dovetech connector.**
 
+Below is an example of the cart page:
+
+![Example Cart Page](https://github.com/user-attachments/assets/16826571-4eba-4731-8766-23f1fd1a3633)
+
 ## Prerequisites
 
 1. Dovetech [account](https://dovetech.com/starter-sign-up) and Processor API Key
 2. commercetools composable commerce [account](https://commercetools.com/free-trial)
 3. The Dovetech connector installed in a commercetools project
-4. commercetools API Client setup with permissions (admin is easiest for this demo)
+4. A commercetools API Client (admin is easiest for this demo)
 5. Checkout app installed in commercetools (if you want to use the checkout)
+6. Node and Yarn installed
 
-## Running Locally
+## Running the Demo
 
 1. Create an `.env` file based on the `.env.example` file. This requires details from your commercetools API client.
 2. Run `yarn install` to install the dependencies and then `yarn dev` to start the site.
