@@ -60,7 +60,7 @@ const getSessionId = async (accessToken: string, cartId: string) => {
 					id: cartId
 				}
 			},
-			metadata: { applicationKey: 'demo-commercetools-checkout-taxes' }
+			metadata: { applicationKey: env.CTP_CHECKOUT_APPLICATION_KEY }
 		})
 	});
 

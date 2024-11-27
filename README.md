@@ -59,7 +59,7 @@ You can simulate setting a customer on a cart by using the `/set-customer` page.
 
 This demo uses the "Complete Checkout" mode for the commercetools checkout. See [Applications](https://docs.commercetools.com/checkout/payment-connectors-applications#applications) for more details.
 
-You need a checkout app installed in your commercetools project to use this. See [Configure Checkout](https://docs.commercetools.com/checkout/configuring-checkout) for more details.
+You need a checkout app installed in your commercetools project to use this. See [Configure Checkout](https://docs.commercetools.com/checkout/configuring-checkout) for more details. Set the `CTP_CHECKOUT_APPLICATION_KEY` variable in the `.env` file to the checkout application key from commercetools.
 
 The "Allow buyers to add discount codes" setting in the checkout app should be left disabled otherwise the commercetools discount codes functionality would be used instead of Dovetech's.
 The cart page in the demo allows entering coupon codes, but the prebuilt "Complete Checkout" does not allow customising the coupon code functionality.
