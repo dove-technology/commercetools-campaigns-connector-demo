@@ -139,7 +139,7 @@ export async function addCouponCode(cartId: string, cartVersion: number, couponC
 				actions: [
 					{
 						action: 'setCustomField',
-						name: 'dovetech-discounts-cartAction',
+						name: 'dovetech-discounts-cart-action',
 						value: serialisedValue
 					}
 				]
@@ -166,7 +166,7 @@ export async function updateCouponCodes(
 				actions: [
 					{
 						action: 'setCustomField',
-						name: 'dovetech-discounts-couponCodes',
+						name: 'dovetech-discounts-coupon-codes',
 						value: couponCodes
 					}
 				]
