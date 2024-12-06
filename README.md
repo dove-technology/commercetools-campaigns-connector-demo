@@ -32,7 +32,7 @@ The cart page allows you to test out the Dovetech functionality by viewing disco
 
 The main area of customisation is the coupon codes functionality. commercetools doesn't allow changing the provider of coupon codes so we need to store them in a custom field on the cart and update the UI to use this.
 
-Coupon codes are stored on the cart using the `dovetech-discounts-coupon-codes` custom field. This is an array of coupon code objects serialised in JSON.
+Coupon codes are stored on the cart using the `dovetech-discounts-coupon-codes` custom field. The type of this field is a set of strings.
 
 Coupon codes are added to the cart using the `dovetech-discounts-cart-action` custom field. This is a JSON object with the following structure:
 
