@@ -32,9 +32,9 @@ The cart page allows you to test out the Dovetech functionality by viewing disco
 
 The main area of customisation is the coupon codes functionality. commercetools doesn't allow changing the provider of coupon codes so we need to store them in a custom field on the cart and update the UI to use this.
 
-Coupon codes are stored on the cart using the `dovetech-discounts-couponCodes` custom field. This is an array of coupon code objects serialised in JSON.
+Coupon codes are stored on the cart using the `dovetech-discounts-coupon-codes` custom field. The type of this field is a set of strings.
 
-Coupon codes are added to the cart using the `dovetech-discounts-cartAction` custom field. This is a JSON object with the following structure:
+Coupon codes are added to the cart using the `dovetech-discounts-cart-action` custom field. This is a JSON object with the following structure:
 
 ```json
 {
@@ -45,11 +45,11 @@ Coupon codes are added to the cart using the `dovetech-discounts-cartAction` cus
 
 When a call is made to update the cart, commercetools calls the service in the Dovetech connector (using an API extension) to validate the coupon code.
 
-Valid coupon codes are added to the `dovetech-discounts-couponCodes` field.
+Valid coupon codes are added to the `dovetech-discounts-coupon-codes` field.
 
 If a coupon code isn't valid an error with status 400 is returned and the coupon code is not added to the cart.
 
-Coupon codes can be removed from the cart by updating the `dovetech-discounts-couponCodes` custom field.
+Coupon codes can be removed from the cart by updating the `dovetech-discounts-coupon-codes` custom field.
 
 ### Customers
 

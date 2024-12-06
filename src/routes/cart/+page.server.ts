@@ -62,10 +62,8 @@ export const actions = {
 		const data = await request.formData();
 		const couponCode = data.get('coupon-code');
 		const cart = await getCartFromSession(cookies);
-
 		const couponCodes = getCouponCodes(cart);
-		const newCouponCodes = couponCodes.filter((code) => code.code !== couponCode);
-
+		const newCouponCodes = couponCodes.filter((code) => code !== couponCode);
 		try {
 			const updatedCart = await updateCouponCodes(cart.id, cart.version, newCouponCodes);
 

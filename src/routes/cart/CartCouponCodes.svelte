@@ -13,7 +13,7 @@
 <ul class="flex flex-wrap gap-2">
 	{#each couponCodes as coupon}
 		<li class="flex items-center text-sm font-medium">
-			{coupon.code}
+			{coupon}
 			<form
 				method="POST"
 				action="?/removeCouponCode"
@@ -29,7 +29,7 @@
 					};
 				}}
 			>
-				<input type="hidden" name="coupon-code" value={coupon.code} />
+				<input type="hidden" name="coupon-code" value={coupon} />
 				<button
 					type="submit"
 					disabled={removingCode}

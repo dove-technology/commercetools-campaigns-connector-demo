@@ -1,14 +1,7 @@
 import type { Cart, LineItem } from '@commercetools/platform-sdk';
-import type { CartCouponCode } from './types/DovetechCouponCodes';
 
-export const getCouponCodes = (cart: Cart): CartCouponCode[] => {
-	const serialisedCodes = cart.custom?.fields['dovetech-discounts-couponCodes'] ?? '';
-
-	if (serialisedCodes) {
-		return JSON.parse(serialisedCodes);
-	}
-
-	return [];
+export const getCouponCodes = (cart: Cart): string[] => {
+	return cart.custom?.fields['dovetech-discounts-coupon-codes'] ?? '';
 };
 
 export const getCartSubtotal = (cart: Cart | undefined): number => {
