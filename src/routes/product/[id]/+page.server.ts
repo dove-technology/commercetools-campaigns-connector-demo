@@ -45,18 +45,18 @@ export const actions: Actions = {
 		const cartId = cookies.get('cartId');
 		let cart;
 
-		if (!cartId) {
-			cart = await createCartAndSetCookie(cookies);
-		} else {
-			cart = await getCart(cartId);
-
-			// handle the cart not being valid even though we have an ID
-			if (!cart) {
-				cart = await createCartAndSetCookie(cookies);
-			}
-		}
-
 		try {
+			if (!cartId) {
+				cart = await createCartAndSetCookie(cookies);
+			} else {
+				cart = await getCart(cartId);
+
+				// handle the cart not being valid even though we have an ID
+				if (!cart) {
+					cart = await createCartAndSetCookie(cookies);
+				}
+			}
+
 			const updatedCart = await addLineItem(cart.id, cart.version, sku);
 
 			return {
