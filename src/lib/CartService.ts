@@ -41,6 +41,8 @@ export async function getCart(cartId: string) {
 		if (errorResponse.statusCode === 404) {
 			return undefined;
 		}
+
+		throw error;
 	}
 }
 

@@ -63,7 +63,7 @@ export const actions: Actions = {
 				cart: updatedCart
 			};
 		} catch (error) {
-			console.error(error);
+			console.dir(error, { depth: null });
 
 			const errorResponse = error as ClientResponse;
 

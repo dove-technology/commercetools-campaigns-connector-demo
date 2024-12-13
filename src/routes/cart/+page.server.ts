@@ -53,7 +53,7 @@ export const actions = {
 				return fail(400, { addCouponCodeError: 'Invalid coupon code' });
 			}
 
-			console.error(error);
+			console.dir(error, { depth: null });
 
 			return fail(500, { addCouponCodeError: 'Failed to set coupon code' });
 		}
@@ -69,7 +69,7 @@ export const actions = {
 
 			return { cart: updatedCart };
 		} catch (error) {
-			console.error(error);
+			console.dir(error, { depth: null });
 			return fail(500, { removeCouponCodeError: 'Failed to remove coupon code' });
 		}
 	},
@@ -96,7 +96,7 @@ export const actions = {
 
 			return { cart: updatedCart };
 		} catch (error) {
-			console.error(error);
+			console.dir(error, { depth: null });
 			return fail(500, { updateItemQuantityError: 'Failed to update item quantity' });
 		}
 	},
@@ -115,7 +115,7 @@ export const actions = {
 
 			return { cart: updatedCart };
 		} catch (error) {
-			console.error(error);
+			console.dir(error, { depth: null });
 			return fail(500, { removeLineItemError: 'Failed to remove item' });
 		}
 	}
