@@ -37,7 +37,7 @@ export const actions: Actions = {
 
 			return { cart: updatedCart };
 		} catch (error) {
-			console.error(error);
+			console.dir(error, { depth: null });
 			return fail(500, { clearCustomerError: 'Failed to clear customer on cart' });
 		}
 	},
@@ -87,7 +87,7 @@ export const actions: Actions = {
 			const updatedCart = await setCustomer(cart.id, cart.version, customer.id, customer.email);
 			return { cart: updatedCart };
 		} catch (error) {
-			console.error(error);
+			console.dir(error, { depth: null });
 			return fail(500, { setCustomerError: 'Failed to set customer on cart' });
 		}
 	}
