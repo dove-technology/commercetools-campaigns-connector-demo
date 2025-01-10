@@ -159,8 +159,7 @@
 		},
 		"fields": {
 			"dovetech-discounts-coupon-codes": "[]",
-			"dovetech-discounts-evaluation-response": "{\"actions\":[],\"basket\":{\"total\":5.98,\"totalAmountOff\":0,\"items\":[{\"total\":5.98,\"totalAmountOff\":0,\"actions\":[]}]},\"aggregates\":{\"total\":5.98,\"totalAmountOff\":0},\"costs\":[],\"commitId\":null,\"evaluationLog\":null}",
-			"dovetech-discounts-evaluation-currency": "EUR"
+			"dovetech-discounts-evaluation-result-summary": "{\"actions\":[],\"aggregateTotal\":5.98,\"currencyCode\":\"EUR\"}"
 		}
 	},
 	"inventoryMode": "None",
